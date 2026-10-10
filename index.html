@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>MIZAAN ENGLISH SCHOOL, LATUR - Student Discipline & Academic Default System</title>
+  <!-- Dynamic PWA / Homescreen App Icon -->
+  <link id="appFavicon" rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpolygon points='50,5 95,25 95,75 50,95 5,75 5,25' fill='%231e3a8a' stroke='%23f59e0b' stroke-width='4'/%3E%3Ctext x='50%25' y='60%25' font-size='42' font-family='sans-serif' font-weight='900' fill='%23fbbf24' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
+  <link id="appAppleIcon" rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpolygon points='50,5 95,25 95,75 50,95 5,75 5,25' fill='%231e3a8a' stroke='%23f59e0b' stroke-width='4'/%3E%3Ctext x='50%25' y='60%25' font-size='42' font-family='sans-serif' font-weight='900' fill='%23fbbf24' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
   <!-- Tailwind CSS & FontAwesome Icons -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -28,8 +31,6 @@
       background-color: transparent;
       font-weight: 600;
     }
-    .no-scrollbar::-webkit-scrollbar { display: none; }
-    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     @media print {
       body * { visibility: hidden; }
       #printableWarningArea, #printableWarningArea * { visibility: visible; }
@@ -40,60 +41,58 @@
 <body class="bg-slate-100 text-slate-800 flex flex-col h-screen overflow-hidden font-sans">
 
   <!-- 1. FIXED TOP APP HEADER -->
-  <header class="bg-blue-900 text-white px-3 md:px-6 py-2.5 shadow flex justify-between items-center select-none shrink-0 z-30">
+  <header class="bg-blue-900 text-white px-3 md:px-6 py-2 shadow flex justify-between items-center select-none shrink-0 z-30">
     <div class="flex items-center gap-2">
-      <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center font-black text-amber-300 text-base border border-white/20">
-        M
+      <!-- School Logo (Dynamic) -->
+      <div id="schoolLogoContainer" class="w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center overflow-hidden border border-amber-400/40 shrink-0">
+        <img id="headerSchoolLogo" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpolygon points='50,5 95,25 95,75 50,95 5,75 5,25' fill='%231e3a8a' stroke='%23f59e0b' stroke-width='4'/%3E%3Ctext x='50%25' y='60%25' font-size='42' font-family='sans-serif' font-weight='900' fill='%23fbbf24' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E" alt="Logo" class="w-full h-full object-contain">
       </div>
       <div>
-        <div class="flex items-center gap-1.5">
-          <h1 class="text-xs md:text-sm font-black tracking-wider uppercase">MIZAAN ENGLISH SCHOOL, LATUR</h1>
-          <span class="bg-amber-400 text-blue-950 text-[9px] font-black px-1.5 py-0.2 rounded font-mono">v1.2</span>
-        </div>
+        <h1 class="text-xs md:text-sm font-black tracking-wider uppercase">MIZAAN ENGLISH SCHOOL, LATUR</h1>
         <p class="text-[10px] md:text-xs text-blue-200">Discipline & Academic Default Management System</p>
       </div>
     </div>
     <div class="flex items-center gap-2">
-      <div id="cloudSyncBadge" class="bg-blue-950 text-blue-300 text-[10px] md:text-[11px] font-semibold px-2.5 py-1 rounded-full border border-blue-800 flex items-center gap-1.5 cursor-pointer" onclick="switchView('settings')" title="Click to view Cloud Sync">
+      <div id="cloudSyncBadge" class="bg-blue-950 text-blue-300 text-[10px] md:text-[11px] font-semibold px-2 py-0.5 md:px-2.5 md:py-1 rounded-full border border-blue-800 flex items-center gap-1.5 cursor-pointer" onclick="switchView('settings')" title="Click to view Cloud Sync">
         <span class="w-2 h-2 rounded-full bg-slate-400" id="syncDot"></span>
         <span id="syncText">Local Mode</span>
       </div>
-      <span id="headerStudentCount" class="bg-blue-950 text-blue-200 text-[11px] font-semibold px-2.5 py-1 rounded-full border border-blue-800">0 Students</span>
+      <span id="headerStudentCount" class="bg-blue-950 text-blue-200 text-[10px] md:text-[11px] font-semibold px-2 py-0.5 md:px-2.5 md:py-1 rounded-full border border-blue-800">0 Students</span>
     </div>
   </header>
 
-  <!-- 2. FIXED TOP NAVIGATION BAR -->
-  <nav class="bg-white border-b border-slate-200 shadow-sm shrink-0 z-20 overflow-x-auto no-scrollbar">
-    <div class="flex items-center justify-start md:justify-center min-w-max px-2">
-      <button onclick="switchView('quickEntry')" id="navQuickEntry" class="flex items-center gap-1.5 px-3.5 py-2.5 text-xs transition top-tab-active">
-        <i class="fa-solid fa-pen-to-square text-sm"></i>
-        <span>Record</span>
+  <!-- 2. FIXED TOP NAVIGATION BAR (ALL 6 TABS ALWAYS VISIBLE) -->
+  <nav class="bg-white border-b border-slate-200 shadow-sm shrink-0 z-20 w-full">
+    <div class="grid grid-cols-6 w-full text-center">
+      <button onclick="switchView('quickEntry')" id="navQuickEntry" class="flex flex-col items-center justify-center py-2 px-0.5 transition top-tab-active">
+        <i class="fa-solid fa-pen-to-square text-xs md:text-sm mb-0.5"></i>
+        <span class="text-[9px] md:text-xs font-bold truncate">Record</span>
       </button>
-      <button onclick="switchView('students')" id="navStudents" class="flex items-center gap-1.5 px-3.5 py-2.5 text-xs transition top-tab-inactive">
-        <i class="fa-solid fa-users text-sm"></i>
-        <span>Students</span>
+      <button onclick="switchView('students')" id="navStudents" class="flex flex-col items-center justify-center py-2 px-0.5 transition top-tab-inactive">
+        <i class="fa-solid fa-users text-xs md:text-sm mb-0.5"></i>
+        <span class="text-[9px] md:text-xs font-bold truncate">Students</span>
       </button>
-      <button onclick="switchView('dashboard')" id="navDashboard" class="flex items-center gap-1.5 px-3.5 py-2.5 text-xs transition top-tab-inactive">
-        <i class="fa-solid fa-bell text-sm"></i>
-        <span>Alerts</span>
+      <button onclick="switchView('dashboard')" id="navDashboard" class="flex flex-col items-center justify-center py-2 px-0.5 transition top-tab-inactive">
+        <i class="fa-solid fa-bell text-xs md:text-sm mb-0.5"></i>
+        <span class="text-[9px] md:text-xs font-bold truncate">Alerts</span>
       </button>
-      <button onclick="switchView('reports')" id="navReports" class="flex items-center gap-1.5 px-3.5 py-2.5 text-xs transition top-tab-inactive">
-        <i class="fa-solid fa-chart-column text-sm"></i>
-        <span>Reports</span>
+      <button onclick="switchView('reports')" id="navReports" class="flex flex-col items-center justify-center py-2 px-0.5 transition top-tab-inactive">
+        <i class="fa-solid fa-chart-column text-xs md:text-sm mb-0.5"></i>
+        <span class="text-[9px] md:text-xs font-bold truncate">Reports</span>
       </button>
-      <button onclick="switchView('warningLetter')" id="navWarningLetter" class="flex items-center gap-1.5 px-3.5 py-2.5 text-xs transition top-tab-inactive">
-        <i class="fa-solid fa-envelope-open-text text-sm"></i>
-        <span>Letter</span>
+      <button onclick="switchView('warningLetter')" id="navWarningLetter" class="flex flex-col items-center justify-center py-2 px-0.5 transition top-tab-inactive">
+        <i class="fa-solid fa-envelope-open-text text-xs md:text-sm mb-0.5"></i>
+        <span class="text-[9px] md:text-xs font-bold truncate">Letter</span>
       </button>
-      <button onclick="switchView('settings')" id="navSettings" class="flex items-center gap-1.5 px-3.5 py-2.5 text-xs transition top-tab-inactive">
-        <i class="fa-solid fa-sliders text-sm"></i>
-        <span>Settings</span>
+      <button onclick="switchView('settings')" id="navSettings" class="flex flex-col items-center justify-center py-2 px-0.5 transition top-tab-inactive">
+        <i class="fa-solid fa-sliders text-xs md:text-sm mb-0.5"></i>
+        <span class="text-[9px] md:text-xs font-bold truncate">Settings</span>
       </button>
     </div>
   </nav>
 
-  <!-- 3. MAIN CONTENT CONTAINER -->
-  <main class="flex-1 overflow-y-auto p-3 md:p-6 max-w-6xl mx-auto w-full">
+  <!-- 3. MAIN SCROLLABLE CONTENT (SAFE PADDING AT BOTTOM) -->
+  <main class="flex-1 overflow-y-auto pb-36 p-3 md:p-6 max-w-6xl mx-auto w-full">
 
     <!-- TAB 1: RECORD DEFAULTS -->
     <section id="viewQuickEntry" class="space-y-4">
@@ -122,7 +121,7 @@
         </div>
       </div>
 
-      <!-- Student Picker -->
+      <!-- Student Search Box -->
       <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 space-y-3">
         <div class="flex justify-between items-center">
           <label class="text-xs font-bold text-slate-700 uppercase tracking-wider">Select Student</label>
@@ -183,7 +182,7 @@
         </button>
       </div>
 
-      <!-- Live Feed: Today's Classroom Activity -->
+      <!-- Today Activity Feed -->
       <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 space-y-2">
         <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wide flex justify-between items-center">
           <span>Today's Classroom Activity Log</span>
@@ -282,7 +281,7 @@
         <button onclick="addSingleStudent()" class="w-full py-2.5 bg-blue-900 text-white font-bold text-xs rounded-lg">Add Student</button>
       </div>
 
-      <!-- Student Directory Roster with Direct Edit Button -->
+      <!-- Student Directory Roster -->
       <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 space-y-3">
         <div class="flex justify-between items-center">
           <div>
@@ -311,7 +310,7 @@
       </div>
     </section>
 
-    <!-- TAB 3: ALERTS & DASHBOARD -->
+    <!-- TAB 3: ALERTS & DISPATCH AUDIT LOG -->
     <section id="viewDashboard" class="space-y-4 hidden">
       <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
         <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm"><p class="text-[11px] text-slate-500">Total Students</p><p class="text-2xl font-black mt-1" id="kpiStudents">0</p></div>
@@ -319,13 +318,56 @@
         <div class="bg-amber-50 p-3.5 rounded-xl border border-amber-200 shadow-sm"><p class="text-[11px] text-amber-800 font-bold">5th Warning</p><p class="text-2xl font-black text-amber-700 mt-1" id="kpiWarnings">0</p></div>
         <div class="bg-red-50 p-3.5 rounded-xl border border-red-200 shadow-sm"><p class="text-[11px] text-red-800 font-bold">6th+ Management</p><p class="text-2xl font-black text-red-700 mt-1" id="kpiManagement">0</p></div>
       </div>
+
+      <!-- Critical Defaulters -->
       <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 space-y-3">
-        <h3 class="font-bold text-xs uppercase text-slate-700">Immediate Action Required</h3>
+        <h3 class="font-bold text-xs uppercase text-slate-700">Immediate Action Required (5th & 6th+ Defaults)</h3>
         <div id="criticalStudentsContainer" class="space-y-2 text-xs"></div>
+      </div>
+
+      <!-- COMMUNICATION & ESCALATION AUDIT LOG (LETTERS, WHATSAPP & PDF TRACKER) -->
+      <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 space-y-3">
+        <div class="flex justify-between items-center border-b pb-2">
+          <div>
+            <h3 class="font-bold text-xs uppercase text-slate-800">PARENT COMMUNICATION & WARNING DISPATCH TRACKER</h3>
+            <p class="text-[10px] text-slate-500">Log of all printed letters, WhatsApp alerts, and PDF notices issued</p>
+          </div>
+          <button onclick="clearDispatchLogsConfirm()" class="text-[10px] text-slate-400 hover:text-red-600 font-bold">Clear Logs</button>
+        </div>
+
+        <div class="grid grid-cols-3 gap-2.5 text-center">
+          <div class="bg-blue-50 border border-blue-200 p-2.5 rounded-xl">
+            <p class="text-[10px] text-blue-700 font-bold uppercase"><i class="fa-solid fa-print mr-1"></i>Letters Printed</p>
+            <p class="text-xl font-black text-blue-900 mt-0.5" id="cntPrintedLetters">0</p>
+          </div>
+          <div class="bg-emerald-50 border border-emerald-200 p-2.5 rounded-xl">
+            <p class="text-[10px] text-emerald-700 font-bold uppercase"><i class="fa-brands fa-whatsapp mr-1"></i>WhatsApp Sent</p>
+            <p class="text-xl font-black text-emerald-900 mt-0.5" id="cntWhatsAppSent">0</p>
+          </div>
+          <div class="bg-rose-50 border border-rose-200 p-2.5 rounded-xl">
+            <p class="text-[10px] text-rose-700 font-bold uppercase"><i class="fa-solid fa-file-pdf mr-1"></i>PDF Shared</p>
+            <p class="text-xl font-black text-rose-900 mt-0.5" id="cntPdfShared">0</p>
+          </div>
+        </div>
+
+        <div class="max-h-56 overflow-y-auto border border-slate-200 rounded-lg">
+          <table class="w-full text-left text-[11px]">
+            <thead class="bg-slate-100 text-slate-700 sticky top-0">
+              <tr>
+                <th class="p-2 border-b">Date & Time</th>
+                <th class="p-2 border-b font-bold">Student</th>
+                <th class="p-2 border-b">Channel</th>
+                <th class="p-2 border-b text-center">Def Count</th>
+                <th class="p-2 border-b">Recipient</th>
+              </tr>
+            </thead>
+            <tbody id="dispatchAuditTableBody" class="divide-y divide-slate-100"></tbody>
+          </table>
+        </div>
       </div>
     </section>
 
-    <!-- TAB 4: REPORTS & MONTHLY EXECUTIVE DIGEST -->
+    <!-- TAB 4: REPORTS & MONTHLY EXECUTIVE DIGEST (SEQUENCED 3-C TO 10-S) -->
     <section id="viewReports" class="space-y-4 hidden">
       <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 space-y-3">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-2 border-b pb-3">
@@ -364,10 +406,13 @@
         </div>
       </div>
 
-      <!-- Comprehensive League Table -->
+      <!-- Comprehensive League Table (Sequenced Ascending from 3-C to 10-S) -->
       <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 space-y-3">
         <div class="flex justify-between items-center">
-          <h3 class="font-bold text-xs uppercase">Class League Breakdown</h3>
+          <div>
+            <h3 class="font-bold text-xs uppercase">Class League Breakdown (Sequential 3-C to 10-S)</h3>
+            <p class="text-[10px] text-slate-500">Ordered by ascending grades and divisions</p>
+          </div>
           <button onclick="exportClassAnalysisToExcel()" class="text-blue-700 font-bold text-xs"><i class="fa-solid fa-file-excel mr-1"></i>Export Table</button>
         </div>
         <div class="overflow-x-auto border rounded-lg">
@@ -388,21 +433,21 @@
       </div>
     </section>
 
-    <!-- TAB 5: 5TH DEFAULT WARNING LETTER -->
+    <!-- TAB 5: DYNAMIC WARNING LETTER (SELECT ANY STUDENT, DYNAMIC COUNT & PDF SHARE) -->
     <section id="viewWarningLetter" class="space-y-4 hidden">
       <div class="bg-white p-3.5 rounded-xl shadow-sm border border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-3">
         <div>
-          <h2 class="font-bold text-sm text-slate-800">5th-Default Formal Warning Letter</h2>
-          <p class="text-[11px] text-slate-500">Official Parent Communication Document</p>
+          <h2 class="font-bold text-sm text-slate-800">Formal Warning Letter Generator</h2>
+          <p class="text-[11px] text-slate-500">Issue official warning document to any student</p>
         </div>
         
-        <!-- Direct Student Picker -->
+        <!-- Direct Student Picker inside Letter Tab -->
         <div class="flex items-center gap-2">
-          <label class="text-xs font-bold text-slate-700 whitespace-nowrap">Select Student:</label>
+          <label class="text-xs font-bold text-slate-700 whitespace-nowrap">Student:</label>
           <select id="wlStudentSelect" onchange="onLetterStudentSelected(this.value)" class="p-2 border rounded-lg text-xs font-bold bg-white text-slate-800 border-slate-300 outline-none max-w-xs shadow-sm"></select>
         </div>
 
-        <!-- Action Buttons -->
+        <!-- Action Buttons: WhatsApp Parents, Share as PDF, Print -->
         <div class="flex flex-wrap gap-2">
           <button onclick="shareWarningViaWhatsAppPrompt()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-lg shadow flex items-center gap-1.5 transition">
             <i class="fa-brands fa-whatsapp text-sm"></i> WhatsApp Parents
@@ -410,7 +455,7 @@
           <button onclick="shareWarningLetterPDF()" class="px-3 py-1.5 bg-rose-700 hover:bg-rose-600 text-white text-xs font-bold rounded-lg shadow flex items-center gap-1.5 transition">
             <i class="fa-solid fa-file-pdf text-sm"></i> Share as PDF
           </button>
-          <button onclick="window.print()" class="px-3 py-1.5 bg-blue-900 hover:bg-blue-800 text-white text-xs font-bold rounded-lg shadow flex items-center gap-1.5 transition">
+          <button onclick="printWarningLetterLogged()" class="px-3 py-1.5 bg-blue-900 hover:bg-blue-800 text-white text-xs font-bold rounded-lg shadow flex items-center gap-1.5 transition">
             <i class="fa-solid fa-print text-sm"></i> Print
           </button>
         </div>
@@ -419,10 +464,13 @@
       <!-- Printable A4 Area -->
       <div id="printableWarningArea" class="bg-white p-6 md:p-8 rounded-xl border border-slate-300 text-xs space-y-4 shadow-sm">
         <div class="text-center border-b pb-3 space-y-1">
-          <h1 class="text-base md:text-lg font-black text-blue-950 uppercase">MIZAAN ENGLISH SCHOOL, LATUR</h1>
+          <div class="flex justify-center mb-1">
+            <img id="letterSchoolLogo" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpolygon points='50,5 95,25 95,75 50,95 5,75 5,25' fill='%231e3a8a' stroke='%23f59e0b' stroke-width='4'/%3E%3Ctext x='50%25' y='60%25' font-size='42' font-family='sans-serif' font-weight='900' fill='%23fbbf24' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E" alt="Logo" class="w-12 h-12 object-contain">
+          </div>
+          <h1 class="text-base md:text-lg font-black text-blue-950 uppercase tracking-wide">MIZAAN ENGLISH SCHOOL, LATUR</h1>
           <p class="text-[11px] text-slate-500 font-medium">Student Discipline & Academic Default Management Office</p>
-          <div class="inline-block bg-red-50 border border-red-300 text-red-700 px-3 py-0.5 rounded text-[11px] font-extrabold uppercase mt-2">
-            FORMAL WARNING LETTER (5TH DEFAULT)
+          <div id="wlHeaderBadge" class="inline-block bg-red-50 border border-red-300 text-red-700 px-3 py-0.5 rounded text-[11px] font-extrabold uppercase mt-2">
+            FORMAL WARNING LETTER (DEFAULT NOTICE)
           </div>
         </div>
         <div class="flex justify-between text-[11px]">
@@ -436,12 +484,12 @@
             <p><strong>Section:</strong> <span id="wlSection">-</span></p>
           </div>
         </div>
-        <div class="bg-slate-50 p-2.5 rounded border border-slate-200 font-bold">
-          Subject: Formal Warning Regarding Repeated Discipline / Academic Defaults
+        <div class="bg-slate-50 p-2.5 rounded border border-slate-200 font-bold text-slate-800">
+          Subject: Formal Warning Notice Regarding Repeated Discipline / Academic Defaults
         </div>
-        <p class="leading-relaxed text-justify">
+        <p class="leading-relaxed text-justify" id="wlMainParagraph">
           Dear Parent / Guardian,<br>
-          This is to formally inform you that your ward has reached the <strong>5th recorded discipline/academic default</strong>. The school has observed repeated concerns requiring immediate correction at home and school.
+          This is to formally inform you that your ward has reached recorded discipline/academic defaults. The school has observed repeated concerns requiring immediate correction at home and school.
         </p>
         <table class="w-full text-left border-collapse border border-slate-300 text-[10px]">
           <thead class="bg-slate-100">
@@ -455,19 +503,38 @@
           </thead>
           <tbody id="wlTableBody"></tbody>
         </table>
-        <p class="text-justify leading-relaxed">
-          Please treat this communication with highest priority. A compulsory meeting with school authorities is required. Further defaults (6th+) will lead to stricter disciplinary actions under school policy.
+        <p class="text-justify leading-relaxed" id="wlEscalationSentence">
+          Please treat this communication with highest priority. A compulsory meeting with school authorities is required. Further defaults will lead to stricter disciplinary actions under school policy.
         </p>
         <div class="pt-8 grid grid-cols-2 gap-8 text-center text-[10px]">
-          <div class="border-t border-slate-500 pt-1.5 font-bold">Parent / Guardian Signature</div>
-          <div class="border-t border-slate-500 pt-1.5 font-bold">Principal / Academic Head</div>
+          <div class="border-t border-slate-500 pt-1.5 font-bold text-slate-800">Parent / Guardian Signature</div>
+          <div class="border-t border-slate-500 pt-1.5 font-bold text-slate-800">Principal / Academic Head</div>
         </div>
       </div>
     </section>
 
-    <!-- TAB 6: SETTINGS -->
+    <!-- TAB 6: SETTINGS (CRITERIA EDIT/SAVE INCLUDED, RESET REMOVED, LOGO UPLOADER) -->
     <section id="viewSettings" class="space-y-5 hidden">
-      <!-- 1. Cloud Sync Module -->
+      <!-- 1. School Logo Uploader Module -->
+      <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 space-y-3">
+        <div class="border-l-4 border-blue-900 pl-3 flex justify-between items-center">
+          <div>
+            <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wide">OFFICIAL SCHOOL LOGO & SHORTCUT ICON</h3>
+            <p class="text-[11px] text-slate-500 mt-0.5">Upload your school logo to replace icon in header, warning letters, and homescreen shortcuts.</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-4 pt-1">
+          <div class="w-14 h-14 rounded-xl border border-slate-200 bg-slate-50 p-1 flex items-center justify-center overflow-hidden shrink-0">
+            <img id="settingsLogoPreview" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpolygon points='50,5 95,25 95,75 50,95 5,75 5,25' fill='%231e3a8a' stroke='%23f59e0b' stroke-width='4'/%3E%3Ctext x='50%25' y='60%25' font-size='42' font-family='sans-serif' font-weight='900' fill='%23fbbf24' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E" alt="Logo" class="w-full h-full object-contain">
+          </div>
+          <div class="space-y-1.5 flex-1 text-xs">
+            <input type="file" id="schoolLogoFileInput" accept="image/png, image/jpeg, image/webp" class="text-xs" onchange="handleSchoolLogoUpload(event)">
+            <p class="text-[10px] text-slate-400">Recommended: Square PNG or JPG with transparent/white background.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Cloud Sync Module -->
       <div class="bg-gradient-to-r from-blue-900 to-indigo-900 text-white p-5 rounded-xl shadow space-y-3">
         <div class="flex justify-between items-center">
           <div class="flex items-center gap-2">
@@ -492,7 +559,7 @@
         </div>
       </div>
 
-      <!-- 2. Academic Terms & Basic Settings Module -->
+      <!-- 3. Academic Terms & Basic Settings Module -->
       <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 space-y-4">
         <div class="border-l-4 border-blue-900 pl-3">
           <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wide">ACADEMIC TERMS & BASIC SETTINGS</h3>
@@ -520,20 +587,20 @@
             <input type="text" id="cfgSpecialDays" class="w-full p-2 border rounded-lg border-slate-300">
           </div>
           <button onclick="saveAllSettingsAndCriteria()" class="px-4 py-2.5 bg-blue-900 hover:bg-blue-800 text-white font-bold text-xs rounded-lg shadow flex items-center gap-1.5">
-            <i class="fa-solid fa-cloud-arrow-up"></i> Save All Settings & Criteria (Cloud & Device)
+            <i class="fa-solid fa-cloud-arrow-up"></i> Save General Settings
           </button>
         </div>
       </div>
 
-      <!-- 3. Discipline & Academic Criteria Master Module -->
+      <!-- 4. Criteria Master (WITH INLINE EDIT & SAVE, RESET REMOVED) -->
       <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 space-y-4">
         <div class="border-l-4 border-blue-900 pl-3 flex justify-between items-center">
           <div>
             <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wide">DISCIPLINE & ACADEMIC CRITERIA MASTER</h3>
-            <p class="text-[11px] text-slate-500 mt-0.5">Rules are permanently synchronized across all connected devices.</p>
+            <p class="text-[11px] text-slate-500 mt-0.5">Edit rule names, change remarks requirement, and save permanently.</p>
           </div>
           <button onclick="saveAllSettingsAndCriteria()" class="px-3 py-1.5 bg-emerald-700 hover:bg-emerald-600 text-white text-xs font-bold rounded-lg shadow flex items-center gap-1">
-            <i class="fa-solid fa-floppy-disk"></i> Save Criteria
+            <i class="fa-solid fa-floppy-disk"></i> Save All Rules
           </button>
         </div>
 
@@ -567,21 +634,16 @@
                 <th class="p-2 border-b">Criterion Name</th>
                 <th class="p-2 border-b">Category</th>
                 <th class="p-2 border-b text-center">Remarks Required?</th>
+                <th class="p-2 border-b text-center">Edit / Save</th>
                 <th class="p-2 border-b text-center">Action</th>
               </tr>
             </thead>
             <tbody id="criteriaMasterTableBody" class="divide-y divide-slate-100"></tbody>
           </table>
         </div>
-
-        <div class="text-center pt-1">
-          <button onclick="resetCriteriaToStandard()" class="text-xs text-blue-700 font-bold hover:underline">
-            Reset Criteria to Mizaan English School Standard 21 Rules
-          </button>
-        </div>
       </div>
 
-      <!-- 4. Excel Data Backup & Sync Module -->
+      <!-- 5. Excel Data Backup & Sync Module -->
       <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 space-y-3">
         <div class="border-l-4 border-blue-900 pl-3">
           <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wide">EXCEL DATA BACKUP & SYNC</h3>
@@ -702,6 +764,8 @@
 
   <!-- JAVASCRIPT ENGINE -->
   <script>
+    const DEFAULT_LOGO_SVG = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpolygon points='50,5 95,25 95,75 50,95 5,75 5,25' fill='%231e3a8a' stroke='%23f59e0b' stroke-width='4'/%3E%3Ctext x='50%25' y='60%25' font-size='42' font-family='sans-serif' font-weight='900' fill='%23fbbf24' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E`;
+
     const DEFAULT_CRITERIA = [
       { name: "Uniform", type: "Discipline", reqRemarks: false },
       { name: "Jacket", type: "Discipline", reqRemarks: false },
@@ -732,7 +796,8 @@
       sections: ["Morning", "Afternoon"],
       groups: ["1", "2", "3", "4"],
       specialDays: ["None", "Annual Sports Week", "Annual Function", "Fun Fair", "Open Day"],
-      criteria: DEFAULT_CRITERIA
+      criteria: DEFAULT_CRITERIA,
+      schoolLogo: DEFAULT_LOGO_SVG
     };
 
     let settings = JSON.parse(localStorage.getItem('mizaan_settings')) || DEFAULT_SETTINGS;
@@ -740,17 +805,63 @@
     if (!settings.sections) settings.sections = ["Morning", "Afternoon"];
     if (!settings.groups) settings.groups = ["1", "2", "3", "4"];
     if (!settings.specialDays) settings.specialDays = ["None", "Annual Sports Week", "Annual Function", "Fun Fair", "Open Day"];
+    if (!settings.schoolLogo) settings.schoolLogo = DEFAULT_LOGO_SVG;
 
     let students = JSON.parse(localStorage.getItem('mizaan_students') || '[]');
     let incidents = JSON.parse(localStorage.getItem('mizaan_incidents') || '[]');
+    let dispatches = JSON.parse(localStorage.getItem('mizaan_dispatches') || '[]');
+    
     let selectedStudent = null;
     let selectedCriteria = new Set();
     let currentIncidentForWhatsApp = null;
+    let editingCriterionIdx = null;
 
     let cloudDb = null;
     let isCloudConnected = false;
 
-    // Cloud Database Listener
+    // --- HELPER: ORDINAL NUMBER FORMATTER (1st, 2nd, 3rd, 4th...) ---
+    function getOrdinal(n) {
+      n = parseInt(n, 10) || 0;
+      const s = ["th", "st", "nd", "rd"];
+      const v = n % 100;
+      return n + (s[(v - 20) % 10] || s[v] || s[0]);
+    }
+
+    // --- LOGO APPLIER (HEADER, LETTER, SHORTCUT ICON) ---
+    function applySchoolLogo(logoDataUrl) {
+      if (!logoDataUrl) return;
+      settings.schoolLogo = logoDataUrl;
+      const headerLogo = document.getElementById('headerSchoolLogo');
+      const letterLogo = document.getElementById('letterSchoolLogo');
+      const previewLogo = document.getElementById('settingsLogoPreview');
+      const fav = document.getElementById('appFavicon');
+      const apple = document.getElementById('appAppleIcon');
+
+      if (headerLogo) headerLogo.src = logoDataUrl;
+      if (letterLogo) letterLogo.src = logoDataUrl;
+      if (previewLogo) previewLogo.src = logoDataUrl;
+      if (fav) fav.href = logoDataUrl;
+      if (apple) apple.href = logoDataUrl;
+    }
+
+    function handleSchoolLogoUpload(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        const dataUrl = evt.target.result;
+        applySchoolLogo(dataUrl);
+        saveState();
+        if (isCloudConnected && cloudDb) {
+          cloudDb.collection('settings').doc('school_config').set(settings);
+        }
+        showToast("School logo updated & applied everywhere!");
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // --- CLOUD FIREBASE SYNC ---
     function initCloudConnection() {
       const savedConfigStr = localStorage.getItem('mizaan_firebase_config');
       if (savedConfigStr) {
@@ -759,9 +870,8 @@
           if (!firebase.apps.length) firebase.initializeApp(config);
           cloudDb = firebase.firestore();
 
-          // Only enable offline cache on web protocols (prevents file:/// desktop lockup)
           if (location.protocol.startsWith('http')) {
-            cloudDb.enablePersistence({ synchronizeTabs: true }).catch(e => console.warn("Persistence:", e));
+            cloudDb.enablePersistence({ synchronizeTabs: true }).catch(e => console.warn(e));
           }
 
           isCloudConnected = true;
@@ -771,13 +881,14 @@
           document.getElementById('syncText').innerText = "Cloud Live";
           document.getElementById('firebaseConfigInput').value = savedConfigStr;
 
-          // 1. Listen for Settings & Criteria Changes
+          // 1. Settings & Criteria Listener
           cloudDb.collection('settings').doc('school_config').onSnapshot(doc => {
             if (doc.exists) {
               const cloudSettings = doc.data();
               if (cloudSettings && cloudSettings.criteria && cloudSettings.criteria.length > 0) {
                 settings = cloudSettings;
                 localStorage.setItem('mizaan_settings', JSON.stringify(settings));
+                if (settings.schoolLogo) applySchoolLogo(settings.schoolLogo);
                 initCriteriaButtons();
                 renderSettingsUI();
                 populateDynamicDropdowns();
@@ -787,7 +898,7 @@
             }
           });
 
-          // 2. Listen for Students
+          // 2. Students Listener
           cloudDb.collection('students').onSnapshot(snap => {
             students = [];
             snap.forEach(doc => students.push({ id: doc.id, ...doc.data() }));
@@ -797,7 +908,7 @@
             populateLetterStudentDropdown();
           });
 
-          // 3. Listen for Incidents
+          // 3. Incidents Listener
           cloudDb.collection('incidents').onSnapshot(snap => {
             incidents = [];
             snap.forEach(doc => incidents.push({ id: doc.id, ...doc.data() }));
@@ -805,6 +916,14 @@
             updateCountsAndBadges();
             renderCriticalStudents();
             renderTodayActivityFeed();
+          });
+
+          // 4. Dispatches Log Listener
+          cloudDb.collection('dispatches').onSnapshot(snap => {
+            dispatches = [];
+            snap.forEach(doc => dispatches.push({ id: doc.id, ...doc.data() }));
+            localStorage.setItem('mizaan_dispatches', JSON.stringify(dispatches));
+            renderDispatchAuditUI();
           });
         } catch (err) {
           console.error("Firebase init failed:", err);
@@ -816,6 +935,7 @@
       localStorage.setItem('mizaan_settings', JSON.stringify(settings));
       localStorage.setItem('mizaan_students', JSON.stringify(students));
       localStorage.setItem('mizaan_incidents', JSON.stringify(incidents));
+      localStorage.setItem('mizaan_dispatches', JSON.stringify(dispatches));
       updateCountsAndBadges();
     }
 
@@ -915,7 +1035,7 @@
         (s.name && s.name.toLowerCase().includes(q)) || 
         (s.rollNo && String(s.rollNo).includes(q)) || 
         (s.class && String(s.class).toLowerCase().includes(q))
-      ).slice(0, 20); // Cap suggestions for instant 60fps typing
+      ).slice(0, 20);
 
       if (matches.length === 0) {
         searchDropdown.innerHTML = '<div class="p-3 text-xs text-slate-400">No students match search.</div>';
@@ -1063,6 +1183,7 @@
       openWhatsAppDispatchModal();
     };
 
+    // --- WHATSAPP DISPATCH MODAL WITH DYNAMIC DEFAULT NUMBER ---
     function openWhatsAppDispatchModal() {
       if (!currentIncidentForWhatsApp || !currentIncidentForWhatsApp.student) {
         const sel = document.getElementById('wlStudentSelect');
@@ -1072,41 +1193,32 @@
 
       const data = currentIncidentForWhatsApp;
       const st = data.student;
+      const count = data.totalDefaults || st.totalDefaults || 1;
+      const ordinalUpper = getOrdinal(count).toUpperCase();
+      const ordinalLower = getOrdinal(count).toLowerCase();
       const banner = document.getElementById('waEscalationBanner');
       let msg = "";
 
-      if (data.totalDefaults === 5) {
+      if (count === 5) {
         banner.className = "p-2.5 rounded-lg border bg-amber-50 border-amber-300 text-amber-900 font-bold block";
-        banner.innerHTML = `<i class="fa-solid fa-triangle-exclamation mr-1 text-amber-600"></i> CRITICAL: 5th Default Reached! Compulsory Meeting Required.`;
-        msg = `*URGENT: MIZAAN ENGLISH SCHOOL, LATUR*\n` +
-              `*FORMAL DISCIPLINARY NOTICE (5TH DEFAULT)*\n\n` +
-              `Dear Parent / Guardian of *${st.name}* (Class: ${st.class}-${st.division}, Roll No: ${st.rollNo}),\n\n` +
-              `This is to inform you that your ward has reached the *5th recorded default* on ${data.date}.\n` +
-              `• Criterion: ${data.criteria}\n` +
-              `• Remarks: ${data.remarks}\n` +
-              `• Recorded by: ${data.teacher}\n\n` +
-              `*MANDATORY ACTION:* As per school disciplinary guidelines, you are strictly required to visit the school office to meet the Principal / Academic Head regarding your ward's continuous default. Further violations will lead to strict administrative escalation.\n\n` +
-              `- Principal / Academic Head\nMizaan English School, Latur`;
-      } else if (data.totalDefaults >= 6) {
+        banner.innerHTML = `<i class="fa-solid fa-triangle-exclamation mr-1 text-amber-600"></i> CRITICAL: 5th Default Reached! Compulsory Parent Meeting Required.`;
+      } else if (count >= 6) {
         banner.className = "p-2.5 rounded-lg border bg-red-50 border-red-300 text-red-900 font-bold block";
-        banner.innerHTML = `<i class="fa-solid fa-bell text-red-600 mr-1"></i> MANAGEMENT CONCERN LEVEL (Default #${data.totalDefaults})`;
-        msg = `*MANAGEMENT ALERT: MIZAAN ENGLISH SCHOOL, LATUR*\n\n` +
-              `Dear Parent of *${st.name}* (Class: ${st.class}-${st.division}),\n` +
-              `Your ward has recorded Default #${data.totalDefaults} today (${data.criteria}).\n` +
-              `Immediate intervention and presence at the school office is mandatory.\n\n` +
-              `- Management Office, Mizaan English School`;
+        banner.innerHTML = `<i class="fa-solid fa-bell text-red-600 mr-1"></i> MANAGEMENT CONCERN LEVEL (${ordinalUpper} Default)`;
       } else {
         banner.className = "hidden";
-        msg = `*DISCIPLINE & ACADEMIC NOTICE*\n` +
-              `*MIZAAN ENGLISH SCHOOL, LATUR*\n\n` +
-              `Dear Parent of *${st.name}* (Class: ${st.class}-${st.division}, Roll: ${st.rollNo}),\n\n` +
-              `A default has been recorded for your ward on ${data.date}:\n` +
-              `• Default #${data.totalDefaults}: ${data.criteria}\n` +
-              `• Details: ${data.remarks}\n` +
-              `• Teacher: ${data.teacher}\n\n` +
-              `Kindly counsel your child at home to take immediate necessary corrective action. Please contact the school authorities if clarification is required.\n\n` +
-              `- Mizaan English School`;
       }
+
+      // Dynamic Notification Message incorporating actual default count
+      msg = `*OFFICIAL NOTICE: MIZAAN ENGLISH SCHOOL, LATUR*\n` +
+            `*FORMAL WARNING NOTICE (${ordinalUpper} DEFAULT)*\n\n` +
+            `Dear Parent / Guardian of *${st.name}* (Class: ${st.class}-${st.division}, Roll No: ${st.rollNo}),\n\n` +
+            `This is to inform you that your ward has reached the *${ordinalLower} recorded discipline/academic default* on ${data.date}.\n` +
+            `• Default #${count}: ${data.criteria}\n` +
+            `• Details / Remarks: ${data.remarks}\n` +
+            `• Teacher: ${data.teacher}\n\n` +
+            `*ACTION REQUIRED:* Kindly counsel your ward immediately at home. Please contact the school office / Academic Head regarding your ward's repeated defaults to take necessary corrective action.\n\n` +
+            `- Principal / Academic Head\nMizaan English School, Latur`;
 
       document.getElementById('waMessagePreview').innerText = msg;
       renderWhatsAppParentActionArea('father');
@@ -1192,7 +1304,7 @@
       `;
     }
 
-    function dispatchWhatsAppToParent(parentType) {
+    async function dispatchWhatsAppToParent(parentType) {
       if (!currentIncidentForWhatsApp) return;
       const st = currentIncidentForWhatsApp.student;
       const phone = parentType === 'father' ? st.fatherMobile : st.motherMobile;
@@ -1206,11 +1318,90 @@
 
       const previewEl = document.getElementById('waMessagePreview');
       const msgText = encodeURIComponent(previewEl ? previewEl.innerText : '');
+
+      // Log Communication Audit Record
+      await logCommunicationDispatch({
+        studentName: st.name,
+        class: `${st.class}-${st.division}`,
+        channel: 'WhatsApp',
+        recipient: parentType === 'father' ? "Father" : "Mother",
+        defaultCount: currentIncidentForWhatsApp.totalDefaults || st.totalDefaults || 1
+      });
+
       window.open(`https://wa.me/${cleanNumber}?text=${msgText}`, '_blank');
     }
 
     function closeWhatsAppModal() {
       document.getElementById('whatsappDispatchModal').classList.add('hidden');
+    }
+
+    // --- COMMUNICATION AUDIT LOG ENGINE ---
+    async function logCommunicationDispatch(entry) {
+      const now = new Date();
+      const record = {
+        dateStr: now.toLocaleDateString('en-GB') + ' ' + now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        studentName: entry.studentName,
+        class: entry.class,
+        channel: entry.channel,
+        recipient: entry.recipient || 'Parents',
+        defaultCount: entry.defaultCount || 1,
+        timestamp: now.getTime()
+      };
+
+      if (isCloudConnected && cloudDb) {
+        await cloudDb.collection('dispatches').add(record);
+      } else {
+        dispatches.unshift(record);
+        saveState();
+        renderDispatchAuditUI();
+      }
+    }
+
+    function renderDispatchAuditUI() {
+      const tb = document.getElementById('dispatchAuditTableBody');
+      if (!tb) return;
+
+      let printed = 0, wa = 0, pdf = 0;
+      dispatches.forEach(d => {
+        if (d.channel === 'Printed Letter') printed++;
+        else if (d.channel === 'WhatsApp') wa++;
+        else if (d.channel === 'PDF Document') pdf++;
+      });
+
+      document.getElementById('cntPrintedLetters').innerText = printed;
+      document.getElementById('cntWhatsAppSent').innerText = wa;
+      document.getElementById('cntPdfShared').innerText = pdf;
+
+      if (dispatches.length === 0) {
+        tb.innerHTML = `<tr><td colspan="5" class="p-3 text-center text-slate-400 italic">No communication dispatches recorded yet.</td></tr>`;
+        return;
+      }
+
+      const list = [...dispatches].sort((a,b) => (b.timestamp || 0) - (a.timestamp || 0)).slice(0, 40);
+      tb.innerHTML = list.map(d => `
+        <tr>
+          <td class="p-2 border-b font-mono text-[10px] text-slate-500">${d.dateStr}</td>
+          <td class="p-2 border-b font-bold text-slate-800">${d.studentName} <span class="text-slate-500 text-[10px]">(${d.class})</span></td>
+          <td class="p-2 border-b"><span class="px-1.5 py-0.5 rounded text-[10px] font-bold ${d.channel === 'WhatsApp' ? 'bg-emerald-100 text-emerald-800' : (d.channel === 'PDF Document' ? 'bg-rose-100 text-rose-800' : 'bg-blue-100 text-blue-800')}">${d.channel}</span></td>
+          <td class="p-2 border-b text-center font-black text-blue-900">#${d.defaultCount}</td>
+          <td class="p-2 border-b text-slate-600">${d.recipient}</td>
+        </tr>
+      `).join('');
+    }
+
+    async function clearDispatchLogsConfirm() {
+      if (!confirm("Clear all recorded dispatch audit logs?")) return;
+      if (isCloudConnected && cloudDb) {
+        const snap = await cloudDb.collection('dispatches').get();
+        const batch = cloudDb.batch();
+        snap.forEach(d => batch.delete(d.ref));
+        await batch.commit();
+      } else {
+        dispatches = [];
+        saveState();
+        renderDispatchAuditUI();
+      }
+      showToast("Dispatch logs cleared.");
     }
 
     function renderTodayActivityFeed() {
@@ -1433,7 +1624,6 @@
       showToast("Student details & numbers updated!");
     }
 
-    // High Performance Student Directory (Capped at 60 for instant rendering)
     function renderStudentRoster() {
       const q = (document.getElementById('filterStudentRoster').value || '').toLowerCase();
       const tb = document.getElementById('studentRosterTableBody');
@@ -1542,6 +1732,15 @@
       runManagementAnalysis();
     }
 
+    // --- SEQUENTIAL CLASS SORTER: PARSES 3-C, 3-G, 4-S, ... 10-S ASCENDING ---
+    function parseClassKey(key) {
+      const match = String(key || '').trim().match(/^(\d+)\s*[-/]?\s*(.*)$/);
+      if (match) {
+        return { grade: parseInt(match[1], 10), div: match[2].trim().toUpperCase() };
+      }
+      return { grade: 999, div: String(key || '').toUpperCase() };
+    }
+
     function runManagementAnalysis() {
       const fromDate = document.getElementById('repFromDate').value || '2020-01-01';
       const toDate = document.getElementById('repToDate').value || '2099-12-31';
@@ -1577,6 +1776,7 @@
         totalDefaults: c.totalDefaults
       }));
 
+      // Top 3 Best Classes
       const best = [...list].sort((a,b) => a.defaultersPct - b.defaultersPct).slice(0, 3);
       document.getElementById('bestClassesContainer').innerHTML = best.map(c => `
         <div class="bg-white p-2 rounded border border-emerald-200 flex justify-between text-xs">
@@ -1585,6 +1785,7 @@
         </div>
       `).join('');
 
+      // Top 3 Alarming Classes
       const alarming = [...list].sort((a,b) => b.defaultersPct - a.defaultersPct).slice(0, 3);
       document.getElementById('alarmingClassesContainer').innerHTML = alarming.map(c => `
         <div class="bg-white p-2 rounded border border-red-200 flex justify-between text-xs">
@@ -1593,9 +1794,17 @@
         </div>
       `).join('');
 
+      // STRICT ASCENDING SEQUENTIAL SORT: 3-C to 10-S
+      list.sort((a, b) => {
+        const pA = parseClassKey(a.classKey);
+        const pB = parseClassKey(b.classKey);
+        if (pA.grade !== pB.grade) return pA.grade - pB.grade;
+        return pA.div.localeCompare(pB.div);
+      });
+
       document.getElementById('comprehensiveClassTableBody').innerHTML = list.map(c => `
         <tr>
-          <td class="p-2 border-b font-bold">Class ${c.classKey}</td>
+          <td class="p-2 border-b font-bold text-slate-800">Class ${c.classKey}</td>
           <td class="p-2 border-b text-center">${c.enrolled}</td>
           <td class="p-2 border-b text-center font-bold">${c.defaultersCount}</td>
           <td class="p-2 border-b text-center font-black ${c.defaultersPct >= 25 ? 'text-red-700' : 'text-emerald-700'}">${c.defaultersPct.toFixed(1)}%</td>
@@ -1623,7 +1832,7 @@
       setReportDateRange('thisMonth');
     }
 
-    // --- WARNING LETTER CONTROLS (RECURSION ELIMINATED) ---
+    // --- WARNING LETTER CONTROLS WITH DYNAMIC COUNT WORDING ---
     function populateLetterStudentDropdown() {
       const sel = document.getElementById('wlStudentSelect');
       if (!sel) return;
@@ -1633,6 +1842,7 @@
         return;
       }
 
+      // Prioritize students with highest defaults at the top
       const sorted = [...students].sort((a,b) => (b.totalDefaults || 0) - (a.totalDefaults || 0) || a.name.localeCompare(b.name));
       sel.innerHTML = sorted.map(s => {
         const flag = (s.totalDefaults >= 5) ? `⚠️ [${s.totalDefaults} Defaults] ` : `(${s.totalDefaults || 0} Def) `;
@@ -1644,7 +1854,7 @@
         targetId = currentIncidentForWhatsApp.student.id;
       }
       sel.value = targetId;
-      renderWarningLetterContent(targetId); // Clean render without calling switchView!
+      renderWarningLetterContent(targetId);
     }
 
     function onLetterStudentSelected(studentId) {
@@ -1664,17 +1874,28 @@
       const sel = document.getElementById('wlStudentSelect');
       if (sel && sel.value !== studentId) sel.value = studentId;
 
+      const logs = incidents.filter(i => i.studentName === student.name).sort((a,b) => b.defaultNo - a.defaultNo);
+      const totalCount = student.totalDefaults || logs.length || 1;
+      const nextCount = totalCount + 1;
+      const ordinalUpper = getOrdinal(totalCount).toUpperCase();
+      const ordinalLower = getOrdinal(totalCount).toLowerCase();
+
       document.getElementById('wlStudentName').innerText = student.name;
       document.getElementById('wlStudentMeta').innerText = `Class: ${student.class} | Division: ${student.division} | Roll: ${student.rollNo}`;
       document.getElementById('wlSection').innerText = student.section || 'Morning';
       document.getElementById('wlDate').innerText = new Date().toLocaleDateString('en-GB');
 
-      const logs = incidents.filter(i => i.studentName === student.name).sort((a,b) => b.defaultNo - a.defaultNo);
-      const topLogs = logs.slice(0, 5);
+      // Update Dynamic Title
+      document.getElementById('wlHeaderBadge').innerText = `FORMAL WARNING LETTER (${ordinalUpper} DEFAULT)`;
 
+      // Update Dynamic Body Sentences
+      document.getElementById('wlMainParagraph').innerHTML = `Dear Parent / Guardian,<br>This is to formally inform you that your ward has reached the <strong>${ordinalLower} recorded discipline/academic default</strong>. The school has observed repeated concerns requiring immediate correction at home and school.`;
+      document.getElementById('wlEscalationSentence').innerHTML = `Please treat this communication with highest priority. A compulsory meeting with school authorities is required. Further defaults (<strong>${nextCount}th+</strong>) will lead to stricter disciplinary and administrative actions under school policy.`;
+
+      const topLogs = logs.slice(0, 5);
       const tbody = document.getElementById('wlTableBody');
       if (topLogs.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="5" class="border border-slate-300 p-2 text-center text-slate-400 italic">No defaults recorded yet for this student.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="5" class="border border-slate-300 p-2 text-center text-slate-400 italic">No historical defaults logged in system yet.</td></tr>`;
       } else {
         tbody.innerHTML = topLogs.map(r => `
           <tr>
@@ -1691,7 +1912,7 @@
         student: student,
         criteria: topLogs.length > 0 ? topLogs.map(l => l.criterion).join(', ') : 'Continuous Academic & Disciplinary Default',
         remarks: topLogs.length > 0 ? (topLogs[0].remarks || 'Repeated defaults reached formal warning threshold') : 'Formal Warning Notice Issued',
-        totalDefaults: student.totalDefaults || topLogs.length || 5,
+        totalDefaults: totalCount,
         teacher: topLogs.length > 0 ? topLogs[0].teacherInitials : 'Office',
         date: new Date().toLocaleDateString('en-GB')
       };
@@ -1701,12 +1922,24 @@
       if (!currentIncidentForWhatsApp || !currentIncidentForWhatsApp.student) {
         const sel = document.getElementById('wlStudentSelect');
         if (sel && sel.value) renderWarningLetterContent(sel.value);
-        else return showToast("Please select a student from the dropdown first.", true);
+        else return showToast("Please select a student first.", true);
       }
       openWhatsAppDispatchModal();
     }
 
-    // --- SHARE AS HIGH-RESOLUTION PDF ---
+    async function printWarningLetterLogged() {
+      const studentName = document.getElementById('wlStudentName').innerText || 'Student';
+      const meta = document.getElementById('wlStudentMeta').innerText;
+      await logCommunicationDispatch({
+        studentName: studentName,
+        class: meta ? meta.split('|')[0].replace('Class:', '').trim() : 'Class',
+        channel: 'Printed Letter',
+        recipient: 'Office Hardcopy',
+        defaultCount: currentIncidentForWhatsApp ? currentIncidentForWhatsApp.totalDefaults : 5
+      });
+      window.print();
+    }
+
     async function shareWarningLetterPDF() {
       const studentName = document.getElementById('wlStudentName').innerText || 'Student';
       if (!studentName || studentName === '-' || studentName.includes('No Students')) {
@@ -1731,10 +1964,18 @@
         const pdfBlob = await html2pdf().from(element).set(opt).outputPdf('blob');
         const file = new File([pdfBlob], filename, { type: 'application/pdf' });
 
+        await logCommunicationDispatch({
+          studentName: studentName,
+          class: currentIncidentForWhatsApp ? `${currentIncidentForWhatsApp.student.class}-${currentIncidentForWhatsApp.student.division}` : 'Class',
+          channel: 'PDF Document',
+          recipient: 'Parent Document',
+          defaultCount: currentIncidentForWhatsApp ? currentIncidentForWhatsApp.totalDefaults : 5
+        });
+
         if (navigator.canShare && navigator.canShare({ files: [file] })) {
           await navigator.share({
             title: `Formal Warning Letter - ${studentName}`,
-            text: `Formal 5th Default Warning Letter for ${studentName} - Mizaan English School, Latur.`,
+            text: `Formal Warning Letter for ${studentName} - Mizaan English School, Latur.`,
             files: [file]
           });
           showToast("PDF shared successfully!");
@@ -1756,6 +1997,8 @@
       XLSX.utils.book_append_sheet(wb, wsStudents, "Student Master");
       const wsIncidents = XLSX.utils.json_to_sheet(incidents);
       XLSX.utils.book_append_sheet(wb, wsIncidents, "Incident Log");
+      const wsDispatches = XLSX.utils.json_to_sheet(dispatches);
+      XLSX.utils.book_append_sheet(wb, wsDispatches, "Communication Log");
       XLSX.writeFile(wb, `Mizaan_Discipline_Records_${new Date().toISOString().split('T')[0]}.xlsx`);
     }
 
@@ -1818,7 +2061,7 @@
       setTimeout(() => location.reload(), 800);
     }
 
-    // --- SETTINGS MODULES ---
+    // --- SETTINGS & CRITERIA INLINE EDIT / SAVE ENGINE ---
     function renderSettingsUI() {
       document.getElementById('cfgAcademicYear').value = settings.academicYear || "2026-27";
       document.getElementById('cfgActiveSemester').value = settings.activeSemester || "Semester 1";
@@ -1860,23 +2103,103 @@
       repSec.innerHTML = '<option value="ALL">All Sections</option>' + settings.sections.map(s => `<option value="${s}">${s}</option>`).join('');
     }
 
+    // Interactive Criteria Table with Inline Edit & Save
     function renderCriteriaMasterTable() {
       const tb = document.getElementById('criteriaMasterTableBody');
       if (!tb) return;
-      tb.innerHTML = (settings.criteria || []).map((c, idx) => `
-        <tr>
-          <td class="p-2 border-b font-bold text-slate-800">${c.name}</td>
-          <td class="p-2 border-b">
-            <span class="px-2 py-0.5 rounded text-[10px] font-bold ${c.type === 'Discipline' ? 'bg-blue-100 text-blue-800' : 'bg-purple-100 text-purple-800'}">${c.type}</span>
-          </td>
-          <td class="p-2 border-b text-center font-bold ${c.reqRemarks ? 'text-red-600' : 'text-slate-400'}">${c.reqRemarks ? 'YES' : 'NO'}</td>
-          <td class="p-2 border-b text-center">
-            <button onclick="deleteCriterion(${idx})" class="text-slate-400 hover:text-red-600 p-1" title="Delete">
-              <i class="fa-solid fa-trash-can"></i>
-            </button>
-          </td>
-        </tr>
-      `).join('');
+
+      tb.innerHTML = (settings.criteria || []).map((c, idx) => {
+        if (editingCriterionIdx === idx) {
+          // Render Editable Input Mode
+          return `
+            <tr class="bg-amber-50/70 border-b">
+              <td class="p-2">
+                <input type="text" id="editCritNameInput" value="${c.name}" class="w-full p-1 border rounded font-bold text-xs border-amber-400 outline-none">
+              </td>
+              <td class="p-2">
+                <select id="editCritCategorySelect" class="p-1 border rounded text-xs bg-white border-amber-400">
+                  <option value="Discipline" ${c.type === 'Discipline' ? 'selected' : ''}>Discipline</option>
+                  <option value="Academic" ${c.type === 'Academic' ? 'selected' : ''}>Academic</option>
+                </select>
+              </td>
+              <td class="p-2 text-center">
+                <label class="inline-flex items-center gap-1 cursor-pointer">
+                  <input type="checkbox" id="editCritRemarksInput" ${c.reqRemarks ? 'checked' : ''} class="rounded text-blue-900">
+                  <span class="text-[10px] font-bold">Req</span>
+                </label>
+              </td>
+              <td class="p-2 text-center">
+                <button onclick="saveCriterionEdit(${idx})" class="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded shadow text-[10px]">
+                  <i class="fa-solid fa-check mr-1"></i>Save
+                </button>
+              </td>
+              <td class="p-2 text-center">
+                <button onclick="cancelCriterionEdit()" class="px-2 py-1 bg-slate-200 text-slate-700 font-bold rounded text-[10px]">
+                  Cancel
+                </button>
+              </td>
+            </tr>
+          `;
+        }
+
+        // Standard View Mode
+        return `
+          <tr>
+            <td class="p-2 border-b font-bold text-slate-800">${c.name}</td>
+            <td class="p-2 border-b">
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold ${c.type === 'Discipline' ? 'bg-blue-100 text-blue-800' : 'bg-purple-100 text-purple-800'}">${c.type}</span>
+            </td>
+            <td class="p-2 border-b text-center font-bold ${c.reqRemarks ? 'text-red-600' : 'text-slate-400'}">${c.reqRemarks ? 'YES' : 'NO'}</td>
+            <td class="p-2 border-b text-center">
+              <button onclick="startCriterionEdit(${idx})" class="px-2.5 py-1 bg-blue-100 hover:bg-blue-200 text-blue-900 font-bold rounded text-[10px] transition">
+                <i class="fa-solid fa-pen-to-square mr-1"></i>Edit
+              </button>
+            </td>
+            <td class="p-2 border-b text-center">
+              <button onclick="deleteCriterion(${idx})" class="text-slate-400 hover:text-red-600 p-1" title="Delete">
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function startCriterionEdit(idx) {
+      editingCriterionIdx = idx;
+      renderCriteriaMasterTable();
+    }
+
+    function cancelCriterionEdit() {
+      editingCriterionIdx = null;
+      renderCriteriaMasterTable();
+    }
+
+    async function saveCriterionEdit(idx) {
+      const nameInput = document.getElementById('editCritNameInput');
+      const catSelect = document.getElementById('editCritCategorySelect');
+      const remInput = document.getElementById('editCritRemarksInput');
+
+      if (!nameInput || !catSelect || !remInput) return;
+      const newName = nameInput.value.trim();
+      if (!newName) return showToast("Criterion name cannot be empty.", true);
+
+      settings.criteria[idx] = {
+        name: newName,
+        type: catSelect.value,
+        reqRemarks: remInput.checked
+      };
+
+      editingCriterionIdx = null;
+      saveState();
+
+      if (isCloudConnected && cloudDb) {
+        await cloudDb.collection('settings').doc('school_config').set(settings);
+      }
+
+      renderCriteriaMasterTable();
+      initCriteriaButtons();
+      showToast(`Rule updated: "${newName}"`);
     }
 
     async function addNewCriterion() {
@@ -1918,21 +2241,7 @@
       showToast("Criterion deleted and synced.");
     }
 
-    async function resetCriteriaToStandard() {
-      if (!confirm("Reset all criteria back to Mizaan English School Standard 21 Rules?")) return;
-      settings.criteria = JSON.parse(JSON.stringify(DEFAULT_CRITERIA));
-      
-      saveState();
-      if (isCloudConnected && cloudDb) {
-        await cloudDb.collection('settings').doc('school_config').set(settings);
-      }
-
-      renderCriteriaMasterTable();
-      initCriteriaButtons();
-      showToast("Criteria reset to standard 21 rules!");
-    }
-
-    // TOP NAV VIEW CONTROLLER
+    // --- TOP NAV VIEW CONTROLLER ---
     function switchView(viewId) {
       const views = ['quickEntry', 'students', 'dashboard', 'reports', 'warningLetter', 'settings'];
       views.forEach(v => {
@@ -1942,13 +2251,16 @@
         const nav = document.getElementById('nav' + v.charAt(0).toUpperCase() + v.slice(1));
         if (nav) {
           nav.className = v === viewId 
-            ? 'flex items-center gap-1.5 px-3.5 py-2.5 text-xs transition top-tab-active' 
-            : 'flex items-center gap-1.5 px-3.5 py-2.5 text-xs transition top-tab-inactive';
+            ? 'flex flex-col items-center justify-center py-2 px-0.5 transition top-tab-active' 
+            : 'flex flex-col items-center justify-center py-2 px-0.5 transition top-tab-inactive';
         }
       });
 
       if (viewId === 'students') renderStudentRoster();
-      if (viewId === 'dashboard') renderCriticalStudents();
+      if (viewId === 'dashboard') {
+        renderCriticalStudents();
+        renderDispatchAuditUI();
+      }
       if (viewId === 'reports') {
         if (!document.getElementById('repFromDate').value) setReportDateRange('allTime');
         else runManagementAnalysis();
@@ -1959,12 +2271,14 @@
     }
 
     // System Boot
+    applySchoolLogo(settings.schoolLogo);
     initDateTimePickers();
     initCriteriaButtons();
     updateCountsAndBadges();
     initCloudConnection();
     renderTodayActivityFeed();
     renderSettingsUI();
+    renderDispatchAuditUI();
   </script>
 </body>
 </html>
