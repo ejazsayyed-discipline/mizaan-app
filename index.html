@@ -3,10 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>MIZAAN ENGLISH SCHOOL, LATUR - Student Discipline & Academic Default System</title>
-  <!-- Dynamic PWA / Homescreen App Icon -->
-  <link id="appFavicon" rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpolygon points='50,5 95,25 95,75 50,95 5,75 5,25' fill='%231e3a8a' stroke='%23f59e0b' stroke-width='4'/%3E%3Ctext x='50%25' y='60%25' font-size='42' font-family='sans-serif' font-weight='900' fill='%23fbbf24' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
-  <link id="appAppleIcon" rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpolygon points='50,5 95,25 95,75 50,95 5,75 5,25' fill='%231e3a8a' stroke='%23f59e0b' stroke-width='4'/%3E%3Ctext x='50%25' y='60%25' font-size='42' font-family='sans-serif' font-weight='900' fill='%23fbbf24' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
+  <title>MIZAAN ENGLISH SCHOOL, LATUR - Student Discipline & Academic Defaulter System</title>
+  
+  <!-- Dynamic PWA Manifest & App Icons -->
+  <link id="appFavicon" rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpolygon points='50,5 95,25 95,75 50,95 5,25' fill='%231e3a8a' stroke='%23f59e0b' stroke-width='4'/%3E%3Ctext x='50%25' y='60%25' font-size='42' font-family='sans-serif' font-weight='900' fill='%23fbbf24' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
+  <link id="appAppleIcon" rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpolygon points='50,5 95,25 95,75 50,95 5,25' fill='%231e3a8a' stroke='%23f59e0b' stroke-width='4'/%3E%3Ctext x='50%25' y='60%25' font-size='42' font-family='sans-serif' font-weight='900' fill='%23fbbf24' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
+  <link id="appManifest" rel="manifest">
+
   <!-- Tailwind CSS & FontAwesome Icons -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -45,7 +48,7 @@
     <div class="flex items-center gap-2">
       <!-- School Logo (Dynamic) -->
       <div id="schoolLogoContainer" class="w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center overflow-hidden border border-amber-400/40 shrink-0">
-        <img id="headerSchoolLogo" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpolygon points='50,5 95,25 95,75 50,95 5,75 5,25' fill='%231e3a8a' stroke='%23f59e0b' stroke-width='4'/%3E%3Ctext x='50%25' y='60%25' font-size='42' font-family='sans-serif' font-weight='900' fill='%23fbbf24' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E" alt="Logo" class="w-full h-full object-contain">
+        <img id="headerSchoolLogo" src="" alt="Logo" class="w-full h-full object-contain">
       </div>
       <div>
         <h1 class="text-xs md:text-sm font-black tracking-wider uppercase">MIZAAN ENGLISH SCHOOL, LATUR</h1>
@@ -61,7 +64,7 @@
     </div>
   </header>
 
-  <!-- 2. FIXED TOP NAVIGATION BAR (ALL 6 TABS ALWAYS VISIBLE) -->
+  <!-- 2. FIXED TOP NAVIGATION BAR (ALL 6 TABS VISIBLE AT ONCE) -->
   <nav class="bg-white border-b border-slate-200 shadow-sm shrink-0 z-20 w-full">
     <div class="grid grid-cols-6 w-full text-center">
       <button onclick="switchView('quickEntry')" id="navQuickEntry" class="flex flex-col items-center justify-center py-2 px-0.5 transition top-tab-active">
@@ -91,7 +94,7 @@
     </div>
   </nav>
 
-  <!-- 3. MAIN SCROLLABLE CONTENT (SAFE PADDING AT BOTTOM) -->
+  <!-- 3. MAIN SCROLLABLE CONTAINER -->
   <main class="flex-1 overflow-y-auto pb-36 p-3 md:p-6 max-w-6xl mx-auto w-full">
 
     <!-- TAB 1: RECORD DEFAULTS -->
@@ -121,7 +124,7 @@
         </div>
       </div>
 
-      <!-- Student Search Box -->
+      <!-- Student Picker -->
       <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 space-y-3">
         <div class="flex justify-between items-center">
           <label class="text-xs font-bold text-slate-700 uppercase tracking-wider">Select Student</label>
@@ -182,7 +185,7 @@
         </button>
       </div>
 
-      <!-- Today Activity Feed -->
+      <!-- Activity Feed -->
       <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 space-y-2">
         <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wide flex justify-between items-center">
           <span>Today's Classroom Activity Log</span>
@@ -194,7 +197,7 @@
       </div>
     </section>
 
-    <!-- TAB 2: STUDENTS TAB (UPLOAD, PASTE, ADD, DIRECT EDIT) -->
+    <!-- TAB 2: STUDENTS TAB -->
     <section id="viewStudents" class="space-y-4 hidden">
       <div class="bg-white p-2 rounded-xl shadow-sm border border-slate-200 grid grid-cols-3 gap-2 text-center">
         <button onclick="switchStudentSubTab('upload')" id="subTabUploadBtn" class="py-2 rounded-lg text-xs font-bold bg-blue-900 text-white transition">
@@ -325,7 +328,7 @@
         <div id="criticalStudentsContainer" class="space-y-2 text-xs"></div>
       </div>
 
-      <!-- COMMUNICATION & ESCALATION AUDIT LOG (LETTERS, WHATSAPP & PDF TRACKER) -->
+      <!-- COMMUNICATION & ESCALATION AUDIT LOG -->
       <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 space-y-3">
         <div class="flex justify-between items-center border-b pb-2">
           <div>
@@ -367,7 +370,7 @@
       </div>
     </section>
 
-    <!-- TAB 4: REPORTS & MONTHLY EXECUTIVE DIGEST (SEQUENCED 3-C TO 10-S) -->
+    <!-- TAB 4: REPORTS (SEQUENCED 3-C TO 10-S) -->
     <section id="viewReports" class="space-y-4 hidden">
       <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 space-y-3">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-2 border-b pb-3">
@@ -433,7 +436,7 @@
       </div>
     </section>
 
-    <!-- TAB 5: DYNAMIC WARNING LETTER (SELECT ANY STUDENT, DYNAMIC COUNT & PDF SHARE) -->
+    <!-- TAB 5: DYNAMIC WARNING LETTER -->
     <section id="viewWarningLetter" class="space-y-4 hidden">
       <div class="bg-white p-3.5 rounded-xl shadow-sm border border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-3">
         <div>
@@ -441,13 +444,11 @@
           <p class="text-[11px] text-slate-500">Issue official warning document to any student</p>
         </div>
         
-        <!-- Direct Student Picker inside Letter Tab -->
         <div class="flex items-center gap-2">
           <label class="text-xs font-bold text-slate-700 whitespace-nowrap">Student:</label>
           <select id="wlStudentSelect" onchange="onLetterStudentSelected(this.value)" class="p-2 border rounded-lg text-xs font-bold bg-white text-slate-800 border-slate-300 outline-none max-w-xs shadow-sm"></select>
         </div>
 
-        <!-- Action Buttons: WhatsApp Parents, Share as PDF, Print -->
         <div class="flex flex-wrap gap-2">
           <button onclick="shareWarningViaWhatsAppPrompt()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-lg shadow flex items-center gap-1.5 transition">
             <i class="fa-brands fa-whatsapp text-sm"></i> WhatsApp Parents
@@ -465,7 +466,7 @@
       <div id="printableWarningArea" class="bg-white p-6 md:p-8 rounded-xl border border-slate-300 text-xs space-y-4 shadow-sm">
         <div class="text-center border-b pb-3 space-y-1">
           <div class="flex justify-center mb-1">
-            <img id="letterSchoolLogo" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpolygon points='50,5 95,25 95,75 50,95 5,75 5,25' fill='%231e3a8a' stroke='%23f59e0b' stroke-width='4'/%3E%3Ctext x='50%25' y='60%25' font-size='42' font-family='sans-serif' font-weight='900' fill='%23fbbf24' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E" alt="Logo" class="w-12 h-12 object-contain">
+            <img id="letterSchoolLogo" src="" alt="Logo" class="w-12 h-12 object-contain">
           </div>
           <h1 class="text-base md:text-lg font-black text-blue-950 uppercase tracking-wide">MIZAAN ENGLISH SCHOOL, LATUR</h1>
           <p class="text-[11px] text-slate-500 font-medium">Student Discipline & Academic Default Management Office</p>
@@ -513,23 +514,21 @@
       </div>
     </section>
 
-    <!-- TAB 6: SETTINGS (CRITERIA EDIT/SAVE INCLUDED, RESET REMOVED, LOGO UPLOADER) -->
+    <!-- TAB 6: SETTINGS (AUTO-RESIZING LOGO UPLOADER & CRITERIA INLINE EDIT) -->
     <section id="viewSettings" class="space-y-5 hidden">
       <!-- 1. School Logo Uploader Module -->
       <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 space-y-3">
-        <div class="border-l-4 border-blue-900 pl-3 flex justify-between items-center">
-          <div>
-            <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wide">OFFICIAL SCHOOL LOGO & SHORTCUT ICON</h3>
-            <p class="text-[11px] text-slate-500 mt-0.5">Upload your school logo to replace icon in header, warning letters, and homescreen shortcuts.</p>
-          </div>
+        <div class="border-l-4 border-blue-900 pl-3">
+          <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wide">OFFICIAL SCHOOL LOGO & SHORTCUT ICON</h3>
+          <p class="text-[11px] text-slate-500 mt-0.5">Images are auto-compressed to permanently fit cloud storage and mobile app shortcuts.</p>
         </div>
         <div class="flex items-center gap-4 pt-1">
           <div class="w-14 h-14 rounded-xl border border-slate-200 bg-slate-50 p-1 flex items-center justify-center overflow-hidden shrink-0">
-            <img id="settingsLogoPreview" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpolygon points='50,5 95,25 95,75 50,95 5,75 5,25' fill='%231e3a8a' stroke='%23f59e0b' stroke-width='4'/%3E%3Ctext x='50%25' y='60%25' font-size='42' font-family='sans-serif' font-weight='900' fill='%23fbbf24' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E" alt="Logo" class="w-full h-full object-contain">
+            <img id="settingsLogoPreview" src="" alt="Logo" class="w-full h-full object-contain">
           </div>
           <div class="space-y-1.5 flex-1 text-xs">
             <input type="file" id="schoolLogoFileInput" accept="image/png, image/jpeg, image/webp" class="text-xs" onchange="handleSchoolLogoUpload(event)">
-            <p class="text-[10px] text-slate-400">Recommended: Square PNG or JPG with transparent/white background.</p>
+            <p class="text-[10px] text-slate-400">Selecting any photo automatically scales it into a permanent 256×256 app shortcut icon.</p>
           </div>
         </div>
       </div>
@@ -592,7 +591,7 @@
         </div>
       </div>
 
-      <!-- 4. Criteria Master (WITH INLINE EDIT & SAVE, RESET REMOVED) -->
+      <!-- 4. Criteria Master (WITH INLINE EDIT & SAVE) -->
       <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 space-y-4">
         <div class="border-l-4 border-blue-900 pl-3 flex justify-between items-center">
           <div>
@@ -764,7 +763,7 @@
 
   <!-- JAVASCRIPT ENGINE -->
   <script>
-    const DEFAULT_LOGO_SVG = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpolygon points='50,5 95,25 95,75 50,95 5,75 5,25' fill='%231e3a8a' stroke='%23f59e0b' stroke-width='4'/%3E%3Ctext x='50%25' y='60%25' font-size='42' font-family='sans-serif' font-weight='900' fill='%23fbbf24' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E`;
+    const DEFAULT_LOGO_SVG = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpolygon points='50,5 95,25 95,75 50,95 5,25' fill='%231e3a8a' stroke='%23f59e0b' stroke-width='4'/%3E%3Ctext x='50%25' y='60%25' font-size='42' font-family='sans-serif' font-weight='900' fill='%23fbbf24' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E`;
 
     const DEFAULT_CRITERIA = [
       { name: "Uniform", type: "Discipline", reqRemarks: false },
@@ -819,7 +818,6 @@
     let cloudDb = null;
     let isCloudConnected = false;
 
-    // --- HELPER: ORDINAL NUMBER FORMATTER (1st, 2nd, 3rd, 4th...) ---
     function getOrdinal(n) {
       n = parseInt(n, 10) || 0;
       const s = ["th", "st", "nd", "rd"];
@@ -827,7 +825,26 @@
       return n + (s[(v - 20) % 10] || s[v] || s[0]);
     }
 
-    // --- LOGO APPLIER (HEADER, LETTER, SHORTCUT ICON) ---
+    // --- PWA SHORTCUT MANIFEST GENERATOR ---
+    function updateWebManifest(iconUrl) {
+      const manifestObj = {
+        name: "MIZAAN ENGLISH SCHOOL",
+        short_name: "Mizaan App",
+        start_url: "./index.html",
+        display: "standalone",
+        background_color: "#1e3a8a",
+        theme_color: "#1e3a8a",
+        icons: [
+          { src: iconUrl, sizes: "192x192", type: "image/png" },
+          { src: iconUrl, sizes: "512x512", type: "image/png" }
+        ]
+      };
+      const manifestStr = "data:application/manifest+json," + encodeURIComponent(JSON.stringify(manifestObj));
+      const manifestTag = document.getElementById('appManifest');
+      if (manifestTag) manifestTag.href = manifestStr;
+    }
+
+    // --- APPLIES LOGO ACROSS HEADER, LETTER, AND APP SHORTCUT ---
     function applySchoolLogo(logoDataUrl) {
       if (!logoDataUrl) return;
       settings.schoolLogo = logoDataUrl;
@@ -842,21 +859,45 @@
       if (previewLogo) previewLogo.src = logoDataUrl;
       if (fav) fav.href = logoDataUrl;
       if (apple) apple.href = logoDataUrl;
+
+      updateWebManifest(logoDataUrl);
     }
 
+    // --- AUTOMATIC CANVAS COMPRESSOR (RESIZES PHONE PHOTOS TO <50KB) ---
     function handleSchoolLogoUpload(e) {
       const file = e.target.files[0];
       if (!file) return;
 
       const reader = new FileReader();
       reader.onload = function(evt) {
-        const dataUrl = evt.target.result;
-        applySchoolLogo(dataUrl);
-        saveState();
-        if (isCloudConnected && cloudDb) {
-          cloudDb.collection('settings').doc('school_config').set(settings);
-        }
-        showToast("School logo updated & applied everywhere!");
+        const img = new Image();
+        img.onload = function() {
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+          const size = 256;
+          canvas.width = size;
+          canvas.height = size;
+
+          ctx.clearRect(0, 0, size, size);
+          const scale = Math.min(size / img.width, size / img.height);
+          const x = (size - img.width * scale) / 2;
+          const y = (size - img.height * scale) / 2;
+          ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
+
+          const compressedDataUrl = canvas.toDataURL('image/png', 0.9);
+
+          applySchoolLogo(compressedDataUrl);
+          saveState();
+
+          if (isCloudConnected && cloudDb) {
+            cloudDb.collection('settings').doc('school_config').set(settings)
+              .then(() => showToast("School logo permanently saved to cloud!"))
+              .catch(err => console.error("Cloud logo save error:", err));
+          } else {
+            showToast("School logo permanently saved on this device!");
+          }
+        };
+        img.src = evt.target.result;
       };
       reader.readAsDataURL(file);
     }
@@ -1183,7 +1224,6 @@
       openWhatsAppDispatchModal();
     };
 
-    // --- WHATSAPP DISPATCH MODAL WITH DYNAMIC DEFAULT NUMBER ---
     function openWhatsAppDispatchModal() {
       if (!currentIncidentForWhatsApp || !currentIncidentForWhatsApp.student) {
         const sel = document.getElementById('wlStudentSelect');
@@ -1209,7 +1249,6 @@
         banner.className = "hidden";
       }
 
-      // Dynamic Notification Message incorporating actual default count
       msg = `*OFFICIAL NOTICE: MIZAAN ENGLISH SCHOOL, LATUR*\n` +
             `*FORMAL WARNING NOTICE (${ordinalUpper} DEFAULT)*\n\n` +
             `Dear Parent / Guardian of *${st.name}* (Class: ${st.class}-${st.division}, Roll No: ${st.rollNo}),\n\n` +
@@ -1319,7 +1358,6 @@
       const previewEl = document.getElementById('waMessagePreview');
       const msgText = encodeURIComponent(previewEl ? previewEl.innerText : '');
 
-      // Log Communication Audit Record
       await logCommunicationDispatch({
         studentName: st.name,
         class: `${st.class}-${st.division}`,
@@ -1335,7 +1373,6 @@
       document.getElementById('whatsappDispatchModal').classList.add('hidden');
     }
 
-    // --- COMMUNICATION AUDIT LOG ENGINE ---
     async function logCommunicationDispatch(entry) {
       const now = new Date();
       const record = {
@@ -1776,7 +1813,6 @@
         totalDefaults: c.totalDefaults
       }));
 
-      // Top 3 Best Classes
       const best = [...list].sort((a,b) => a.defaultersPct - b.defaultersPct).slice(0, 3);
       document.getElementById('bestClassesContainer').innerHTML = best.map(c => `
         <div class="bg-white p-2 rounded border border-emerald-200 flex justify-between text-xs">
@@ -1785,7 +1821,6 @@
         </div>
       `).join('');
 
-      // Top 3 Alarming Classes
       const alarming = [...list].sort((a,b) => b.defaultersPct - a.defaultersPct).slice(0, 3);
       document.getElementById('alarmingClassesContainer').innerHTML = alarming.map(c => `
         <div class="bg-white p-2 rounded border border-red-200 flex justify-between text-xs">
@@ -1832,7 +1867,7 @@
       setReportDateRange('thisMonth');
     }
 
-    // --- WARNING LETTER CONTROLS WITH DYNAMIC COUNT WORDING ---
+    // --- WARNING LETTER CONTROLS ---
     function populateLetterStudentDropdown() {
       const sel = document.getElementById('wlStudentSelect');
       if (!sel) return;
@@ -1842,7 +1877,6 @@
         return;
       }
 
-      // Prioritize students with highest defaults at the top
       const sorted = [...students].sort((a,b) => (b.totalDefaults || 0) - (a.totalDefaults || 0) || a.name.localeCompare(b.name));
       sel.innerHTML = sorted.map(s => {
         const flag = (s.totalDefaults >= 5) ? `⚠️ [${s.totalDefaults} Defaults] ` : `(${s.totalDefaults || 0} Def) `;
@@ -1885,10 +1919,7 @@
       document.getElementById('wlSection').innerText = student.section || 'Morning';
       document.getElementById('wlDate').innerText = new Date().toLocaleDateString('en-GB');
 
-      // Update Dynamic Title
       document.getElementById('wlHeaderBadge').innerText = `FORMAL WARNING LETTER (${ordinalUpper} DEFAULT)`;
-
-      // Update Dynamic Body Sentences
       document.getElementById('wlMainParagraph').innerHTML = `Dear Parent / Guardian,<br>This is to formally inform you that your ward has reached the <strong>${ordinalLower} recorded discipline/academic default</strong>. The school has observed repeated concerns requiring immediate correction at home and school.`;
       document.getElementById('wlEscalationSentence').innerHTML = `Please treat this communication with highest priority. A compulsory meeting with school authorities is required. Further defaults (<strong>${nextCount}th+</strong>) will lead to stricter disciplinary and administrative actions under school policy.`;
 
@@ -2103,14 +2134,12 @@
       repSec.innerHTML = '<option value="ALL">All Sections</option>' + settings.sections.map(s => `<option value="${s}">${s}</option>`).join('');
     }
 
-    // Interactive Criteria Table with Inline Edit & Save
     function renderCriteriaMasterTable() {
       const tb = document.getElementById('criteriaMasterTableBody');
       if (!tb) return;
 
       tb.innerHTML = (settings.criteria || []).map((c, idx) => {
         if (editingCriterionIdx === idx) {
-          // Render Editable Input Mode
           return `
             <tr class="bg-amber-50/70 border-b">
               <td class="p-2">
@@ -2142,7 +2171,6 @@
           `;
         }
 
-        // Standard View Mode
         return `
           <tr>
             <td class="p-2 border-b font-bold text-slate-800">${c.name}</td>
