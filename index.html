@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>MIZAAN ENGLISH SCHOOL, LATUR - Student Discipline & Academic Defaulter System</title>
+  <title>MIZAAN ENGLISH SCHOOL, LATUR - Student Discipline & Academic Default System</title>
   
   <!-- Dynamic PWA Manifest & App Icons -->
   <link id="appFavicon" rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpolygon points='50,5 95,25 95,75 50,95 5,25' fill='%231e3a8a' stroke='%23f59e0b' stroke-width='4'/%3E%3Ctext x='50%25' y='60%25' font-size='42' font-family='sans-serif' font-weight='900' fill='%23fbbf24' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
@@ -37,7 +37,7 @@
     @media print {
       body * { visibility: hidden; }
       #printableWarningArea, #printableWarningArea * { visibility: visible; }
-      #printableWarningArea { position: absolute; left: 0; top: 0; width: 100%; border: none !important; box-shadow: none !important; }
+      #printableWarningArea { position: absolute; left: 0; top: 0; width: 100%; border: none !important; box-shadow: none !important; page-break-inside: avoid; }
     }
   </style>
 </head>
@@ -436,7 +436,7 @@
       </div>
     </section>
 
-    <!-- TAB 5: DYNAMIC WARNING LETTER -->
+    <!-- TAB 5: DYNAMIC WARNING LETTER (SHOWS ALL DEFAULTS, UP TO 15) -->
     <section id="viewWarningLetter" class="space-y-4 hidden">
       <div class="bg-white p-3.5 rounded-xl shadow-sm border border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-3">
         <div>
@@ -463,14 +463,14 @@
       </div>
 
       <!-- Printable A4 Area -->
-      <div id="printableWarningArea" class="bg-white p-6 md:p-8 rounded-xl border border-slate-300 text-xs space-y-4 shadow-sm">
-        <div class="text-center border-b pb-3 space-y-1">
+      <div id="printableWarningArea" class="bg-white p-6 md:p-8 rounded-xl border border-slate-300 text-xs space-y-3 shadow-sm">
+        <div class="text-center border-b pb-2 space-y-1">
           <div class="flex justify-center mb-1">
-            <img id="letterSchoolLogo" src="" alt="Logo" class="w-12 h-12 object-contain">
+            <img id="letterSchoolLogo" src="" alt="Logo" class="w-11 h-11 object-contain">
           </div>
           <h1 class="text-base md:text-lg font-black text-blue-950 uppercase tracking-wide">MIZAAN ENGLISH SCHOOL, LATUR</h1>
-          <p class="text-[11px] text-slate-500 font-medium">Student Discipline & Academic Default Management Office</p>
-          <div id="wlHeaderBadge" class="inline-block bg-red-50 border border-red-300 text-red-700 px-3 py-0.5 rounded text-[11px] font-extrabold uppercase mt-2">
+          <p class="text-[10px] md:text-[11px] text-slate-500 font-medium">Student Discipline & Academic Default Management Office</p>
+          <div id="wlHeaderBadge" class="inline-block bg-red-50 border border-red-300 text-red-700 px-3 py-0.5 rounded text-[11px] font-extrabold uppercase mt-1">
             FORMAL WARNING LETTER (DEFAULT NOTICE)
           </div>
         </div>
@@ -485,36 +485,40 @@
             <p><strong>Section:</strong> <span id="wlSection">-</span></p>
           </div>
         </div>
-        <div class="bg-slate-50 p-2.5 rounded border border-slate-200 font-bold text-slate-800">
+        <div class="bg-slate-50 p-2 rounded border border-slate-200 font-bold text-slate-800 text-[11px]">
           Subject: Formal Warning Notice Regarding Repeated Discipline / Academic Defaults
         </div>
-        <p class="leading-relaxed text-justify" id="wlMainParagraph">
+        <p class="leading-relaxed text-justify text-[11px]" id="wlMainParagraph">
           Dear Parent / Guardian,<br>
           This is to formally inform you that your ward has reached recorded discipline/academic defaults. The school has observed repeated concerns requiring immediate correction at home and school.
         </p>
+        
+        <!-- Table displaying all defaults (up to 15) -->
         <table class="w-full text-left border-collapse border border-slate-300 text-[10px]">
           <thead class="bg-slate-100">
             <tr>
-              <th class="border border-slate-300 p-1.5">Date</th>
-              <th class="border border-slate-300 p-1.5">Type</th>
-              <th class="border border-slate-300 p-1.5 font-bold">Criterion</th>
-              <th class="border border-slate-300 p-1.5">Remarks</th>
-              <th class="border border-slate-300 p-1.5">Teacher</th>
+              <th class="border border-slate-300 py-1 px-1.5 text-center w-10">#</th>
+              <th class="border border-slate-300 py-1 px-1.5 w-20">Date</th>
+              <th class="border border-slate-300 py-1 px-1.5 w-24">Type</th>
+              <th class="border border-slate-300 py-1 px-1.5 font-bold">Criterion</th>
+              <th class="border border-slate-300 py-1 px-1.5">Remarks</th>
+              <th class="border border-slate-300 py-1 px-1.5 text-center w-14">Teacher</th>
             </tr>
           </thead>
           <tbody id="wlTableBody"></tbody>
         </table>
-        <p class="text-justify leading-relaxed" id="wlEscalationSentence">
+
+        <p class="text-justify leading-relaxed text-[11px]" id="wlEscalationSentence">
           Please treat this communication with highest priority. A compulsory meeting with school authorities is required. Further defaults will lead to stricter disciplinary actions under school policy.
         </p>
-        <div class="pt-8 grid grid-cols-2 gap-8 text-center text-[10px]">
-          <div class="border-t border-slate-500 pt-1.5 font-bold text-slate-800">Parent / Guardian Signature</div>
-          <div class="border-t border-slate-500 pt-1.5 font-bold text-slate-800">Principal / Academic Head</div>
+        <div class="pt-6 grid grid-cols-2 gap-8 text-center text-[10px]">
+          <div class="border-t border-slate-500 pt-1 font-bold text-slate-800">Parent / Guardian Signature</div>
+          <div class="border-t border-slate-500 pt-1 font-bold text-slate-800">Principal / Academic Head</div>
         </div>
       </div>
     </section>
 
-    <!-- TAB 6: SETTINGS (AUTO-RESIZING LOGO UPLOADER & CRITERIA INLINE EDIT) -->
+    <!-- TAB 6: SETTINGS -->
     <section id="viewSettings" class="space-y-5 hidden">
       <!-- 1. School Logo Uploader Module -->
       <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 space-y-3">
@@ -1224,6 +1228,7 @@
       openWhatsAppDispatchModal();
     };
 
+    // --- WHATSAPP DISPATCH MODAL ---
     function openWhatsAppDispatchModal() {
       if (!currentIncidentForWhatsApp || !currentIncidentForWhatsApp.student) {
         const sel = document.getElementById('wlStudentSelect');
@@ -1769,7 +1774,6 @@
       runManagementAnalysis();
     }
 
-    // --- SEQUENTIAL CLASS SORTER: PARSES 3-C, 3-G, 4-S, ... 10-S ASCENDING ---
     function parseClassKey(key) {
       const match = String(key || '').trim().match(/^(\d+)\s*[-/]?\s*(.*)$/);
       if (match) {
@@ -1813,6 +1817,7 @@
         totalDefaults: c.totalDefaults
       }));
 
+      // Top 3 Best Classes
       const best = [...list].sort((a,b) => a.defaultersPct - b.defaultersPct).slice(0, 3);
       document.getElementById('bestClassesContainer').innerHTML = best.map(c => `
         <div class="bg-white p-2 rounded border border-emerald-200 flex justify-between text-xs">
@@ -1821,6 +1826,7 @@
         </div>
       `).join('');
 
+      // Top 3 Alarming Classes
       const alarming = [...list].sort((a,b) => b.defaultersPct - a.defaultersPct).slice(0, 3);
       document.getElementById('alarmingClassesContainer').innerHTML = alarming.map(c => `
         <div class="bg-white p-2 rounded border border-red-200 flex justify-between text-xs">
@@ -1829,7 +1835,7 @@
         </div>
       `).join('');
 
-      // STRICT ASCENDING SEQUENTIAL SORT: 3-C to 10-S
+      // Ascending Sequential Sort: 3-C to 10-S
       list.sort((a, b) => {
         const pA = parseClassKey(a.classKey);
         const pB = parseClassKey(b.classKey);
@@ -1867,7 +1873,7 @@
       setReportDateRange('thisMonth');
     }
 
-    // --- WARNING LETTER CONTROLS ---
+    // --- WARNING LETTER ENGINE: SHOWS ALL DEFAULTS UP TO MAX 15 ---
     function populateLetterStudentDropdown() {
       const sel = document.getElementById('wlStudentSelect');
       if (!sel) return;
@@ -1908,8 +1914,9 @@
       const sel = document.getElementById('wlStudentSelect');
       if (sel && sel.value !== studentId) sel.value = studentId;
 
-      const logs = incidents.filter(i => i.studentName === student.name).sort((a,b) => b.defaultNo - a.defaultNo);
-      const totalCount = student.totalDefaults || logs.length || 1;
+      // Retrieve all incidents for this student
+      const studentIncidents = incidents.filter(i => i.studentName === student.name);
+      const totalCount = student.totalDefaults || studentIncidents.length || 1;
       const nextCount = totalCount + 1;
       const ordinalUpper = getOrdinal(totalCount).toUpperCase();
       const ordinalLower = getOrdinal(totalCount).toLowerCase();
@@ -1923,28 +1930,32 @@
       document.getElementById('wlMainParagraph').innerHTML = `Dear Parent / Guardian,<br>This is to formally inform you that your ward has reached the <strong>${ordinalLower} recorded discipline/academic default</strong>. The school has observed repeated concerns requiring immediate correction at home and school.`;
       document.getElementById('wlEscalationSentence').innerHTML = `Please treat this communication with highest priority. A compulsory meeting with school authorities is required. Further defaults (<strong>${nextCount}th+</strong>) will lead to stricter disciplinary and administrative actions under school policy.`;
 
-      const topLogs = logs.slice(0, 5);
+      // Select up to 15 defaults, ordered chronologically
+      let displayLogs = [...studentIncidents].sort((a,b) => (b.defaultNo || 0) - (a.defaultNo || 0)).slice(0, 15);
+      displayLogs.sort((a,b) => (a.defaultNo || 0) - (b.defaultNo || 0));
+
       const tbody = document.getElementById('wlTableBody');
-      if (topLogs.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="5" class="border border-slate-300 p-2 text-center text-slate-400 italic">No historical defaults logged in system yet.</td></tr>`;
+      if (displayLogs.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" class="border border-slate-300 p-2 text-center text-slate-400 italic">No historical defaults logged in system yet.</td></tr>`;
       } else {
-        tbody.innerHTML = topLogs.map(r => `
+        tbody.innerHTML = displayLogs.map((r, idx) => `
           <tr>
-            <td class="border border-slate-300 p-1.5">${r.date}</td>
-            <td class="border border-slate-300 p-1.5">${r.type}</td>
-            <td class="border border-slate-300 p-1.5 font-bold">${r.criterion}</td>
-            <td class="border border-slate-300 p-1.5 text-slate-600">${r.remarks || '-'}</td>
-            <td class="border border-slate-300 p-1.5 font-semibold">${r.teacherInitials}</td>
+            <td class="border border-slate-300 py-1 px-1.5 text-center font-bold text-slate-700">#${r.defaultNo || (idx + 1)}</td>
+            <td class="border border-slate-300 py-1 px-1.5">${r.date}</td>
+            <td class="border border-slate-300 py-1 px-1.5">${r.type}</td>
+            <td class="border border-slate-300 py-1 px-1.5 font-bold">${r.criterion}</td>
+            <td class="border border-slate-300 py-1 px-1.5 text-slate-600">${r.remarks || '-'}</td>
+            <td class="border border-slate-300 py-1 px-1.5 text-center font-semibold">${r.teacherInitials}</td>
           </tr>
         `).join('');
       }
 
       currentIncidentForWhatsApp = {
         student: student,
-        criteria: topLogs.length > 0 ? topLogs.map(l => l.criterion).join(', ') : 'Continuous Academic & Disciplinary Default',
-        remarks: topLogs.length > 0 ? (topLogs[0].remarks || 'Repeated defaults reached formal warning threshold') : 'Formal Warning Notice Issued',
+        criteria: displayLogs.length > 0 ? [...new Set(displayLogs.map(l => l.criterion))].slice(0, 4).join(', ') : 'Continuous Academic & Disciplinary Default',
+        remarks: displayLogs.length > 0 ? (displayLogs[displayLogs.length - 1].remarks || 'Repeated defaults reached formal warning threshold') : 'Formal Warning Notice Issued',
         totalDefaults: totalCount,
-        teacher: topLogs.length > 0 ? topLogs[0].teacherInitials : 'Office',
+        teacher: displayLogs.length > 0 ? displayLogs[displayLogs.length - 1].teacherInitials : 'Office',
         date: new Date().toLocaleDateString('en-GB')
       };
     }
@@ -1984,7 +1995,7 @@
       showToast("Generating PDF document...");
 
       const opt = {
-        margin: [10, 10, 10, 10],
+        margin: [8, 8, 8, 8],
         filename: filename,
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: { scale: 2, useCORS: true },
