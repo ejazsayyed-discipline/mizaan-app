@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>MIZAAN ENGLISH SCHOOL, LATUR - Student Discipline & Academic Default System</title>
+  <title>MIZAAN ENGLISH SCHOOL, LATUR - Student Discipline & Academic Default System (v2.2)</title>
   
   <!-- Dynamic PWA Manifest & App Icons -->
   <link id="appFavicon" rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpolygon points='50,5 95,25 95,75 50,95 5,25' fill='%231e3a8a' stroke='%23f59e0b' stroke-width='4'/%3E%3Ctext x='50%25' y='60%25' font-size='42' font-family='sans-serif' font-weight='900' fill='%23fbbf24' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
@@ -34,10 +34,71 @@
       background-color: transparent;
       font-weight: 600;
     }
+    /* Warning letter: A4 portrait, large and spacious for short histories, compact only for 15-20 records. */
+    #printableWarningArea {
+      --wl-body-font: 17px;
+      --wl-small-font: 15px;
+      --wl-table-font: 15px;
+      --wl-cell-y: 8px;
+      --wl-cell-x: 7px;
+      --wl-section-gap: 12px;
+      --wl-header-font: 28px;
+      --wl-table-min-height: 75mm;
+      font-size: var(--wl-body-font) !important;
+      line-height: 1.38 !important;
+      width: 100%;
+      max-width: 194mm;
+      min-height: 278mm;
+      margin-inline: auto;
+      padding: 8mm !important;
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+      background: #fff;
+    }
+    #printableWarningArea > * { margin-top: 0 !important; margin-bottom: var(--wl-section-gap) !important; }
+    #printableWarningArea > div:first-child { padding-bottom: 4mm !important; }
+    #printableWarningArea h1 { font-size: var(--wl-header-font) !important; line-height: 1.15 !important; }
+    #printableWarningArea #letterSchoolLogo { width: 22mm !important; height: 22mm !important; }
+    #printableWarningArea #wlHeaderBadge { font-size: var(--wl-small-font) !important; padding: 5px 11px !important; line-height: 1.25 !important; }
+    #printableWarningArea #wlStudentName { font-size: calc(var(--wl-body-font) + 3px) !important; line-height: 1.25 !important; }
+    #printableWarningArea #wlStudentMeta,
+    #printableWarningArea #wlMainParagraph,
+    #printableWarningArea #wlEscalationSentence { font-size: var(--wl-body-font) !important; line-height: 1.35 !important; }
+    #printableWarningArea .wl-metadata { font-size: var(--wl-small-font) !important; line-height: 1.35 !important; }
+    #printableWarningArea .wl-subject { font-size: var(--wl-body-font) !important; padding: 9px 11px !important; line-height: 1.3 !important; }
+    #printableWarningArea table { width: 100%; table-layout: fixed; font-size: var(--wl-table-font) !important; line-height: 1.22 !important; flex: 1 1 auto; min-height: var(--wl-table-min-height); height: auto; border-collapse: collapse; }
+    #printableWarningArea th, #printableWarningArea td { font-size: var(--wl-table-font) !important; padding: var(--wl-cell-y) var(--wl-cell-x) !important; overflow-wrap: anywhere; vertical-align: top; }
+    #printableWarningArea th:nth-child(1), #printableWarningArea td:nth-child(1) { width: 9mm; }
+    #printableWarningArea th:nth-child(2), #printableWarningArea td:nth-child(2) { width: 22mm; }
+    #printableWarningArea th:nth-child(3), #printableWarningArea td:nth-child(3) { width: 24mm; }
+    #printableWarningArea th:nth-child(6), #printableWarningArea td:nth-child(6) { width: 12mm; }
+    #printableWarningArea .wl-signatures { margin-top: auto !important; padding-top: 7mm !important; gap: 14mm !important; font-size: var(--wl-small-font) !important; line-height: 1.35 !important; }
+    #printableWarningArea .wl-signatures > div { padding-top: 3mm !important; min-height: 12mm; }
+    @page { size: A4 portrait; margin: 7mm; }
     @media print {
+      html, body { width: 100% !important; height: auto !important; overflow: visible !important; background: #fff !important; }
       body * { visibility: hidden; }
       #printableWarningArea, #printableWarningArea * { visibility: visible; }
-      #printableWarningArea { position: absolute; left: 0; top: 0; width: 100%; border: none !important; box-shadow: none !important; page-break-inside: avoid; }
+      #printableWarningArea {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100% !important;
+        max-width: none !important;
+        height: 283mm !important;
+        min-height: 283mm !important;
+        max-height: 283mm !important;
+        margin: 0 !important;
+        border: none !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        box-sizing: border-box !important;
+        page-break-inside: avoid;
+        break-inside: avoid-page;
+        overflow: visible !important;
+      }
+      #printableWarningArea > * { page-break-inside: avoid; break-inside: avoid; }
     }
   </style>
 </head>
@@ -97,7 +158,7 @@
   <!-- 3. MAIN SCROLLABLE CONTAINER -->
   <main class="flex-1 overflow-y-auto pb-36 p-3 md:p-6 max-w-6xl mx-auto w-full">
 
-    <!-- TAB 1: RECORD DEFAULTS (EVENLY DISTRIBUTED 5-COLUMN CONTROLS) -->
+    <!-- TAB 1: RECORD DEFAULTS (5 EQUAL-WIDTH COLUMNS) -->
     <section id="viewQuickEntry" class="space-y-4">
       <div class="bg-white p-3.5 rounded-xl shadow-sm border border-slate-200 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2.5 text-xs">
         <!-- 1. Date -->
@@ -121,7 +182,7 @@
           <label class="block text-slate-500 font-bold mb-1">Teacher Initials*</label>
           <input type="text" id="teacherInitials" maxlength="4" placeholder="e.g. MS" class="w-full uppercase font-bold p-2 border rounded-lg border-slate-300 outline-none text-xs">
         </div>
-        <!-- 4. Section Selector (Default Morning) -->
+        <!-- 4. Section Selector -->
         <div class="w-full">
           <label class="block text-slate-500 font-bold mb-1">Section*</label>
           <select id="quickSectionSelect" onchange="onGlobalSectionChanged(this.value)" class="w-full p-2 border rounded-lg border-slate-300 bg-white font-bold text-blue-900 outline-none text-xs">
@@ -213,7 +274,7 @@
       </div>
     </section>
 
-    <!-- TAB 2: STUDENTS TAB (UPLOAD, DIRECT EDIT, INDIVIDUAL INSPECT & CLASS REPORT) -->
+    <!-- TAB 2: STUDENTS TAB (UPLOAD, EDIT, INSPECT & CLASS REPORT) -->
     <section id="viewStudents" class="space-y-4 hidden">
       <div class="bg-white p-2 rounded-xl shadow-sm border border-slate-200 grid grid-cols-3 gap-2 text-center">
         <button onclick="switchStudentSubTab('upload')" id="subTabUploadBtn" class="py-2 rounded-lg text-xs font-bold bg-blue-900 text-white transition">
@@ -227,7 +288,7 @@
         </button>
       </div>
 
-      <!-- Excel Uploader (Supports Father & Mother Numbers Explicitly) -->
+      <!-- Excel Uploader -->
       <div id="studentUploadPanel" class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 space-y-4">
         <div class="border-l-4 border-blue-900 pl-3">
           <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wide">Import Student Excel Roster</h3>
@@ -276,6 +337,7 @@
           <button onclick="clearPasteArea()" class="px-4 py-2 bg-slate-200 text-xs rounded-lg">Clear</button>
         </div>
         <div id="pastePreviewSection" class="hidden space-y-3 pt-3 border-t">
+          <p id="pastePreviewCount" class="text-xs font-bold text-slate-600"></p>
           <button onclick="commitPastedStudents()" class="w-full py-2 bg-emerald-700 text-white font-bold text-xs rounded-lg">Save All Pasted Students</button>
           <div class="max-h-52 overflow-y-auto border rounded-lg">
             <table class="w-full text-left text-[11px]">
@@ -301,7 +363,7 @@
         <button onclick="addSingleStudent()" class="w-full py-2.5 bg-blue-900 text-white font-bold text-xs rounded-lg">Add Student</button>
       </div>
 
-      <!-- Student Directory Roster (With Individual View History Action) -->
+      <!-- Student Directory Roster -->
       <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 space-y-3">
         <div class="flex justify-between items-center">
           <div>
@@ -330,7 +392,7 @@
         </div>
       </div>
 
-      <!-- REQUIREMENT 7: CLASS DEFAULTER REPORT & TEACHER DISPATCH CONSOLE -->
+      <!-- CLASS DEFAULTER REPORT & TEACHER DISPATCH CONSOLE -->
       <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 space-y-4">
         <div class="border-l-4 border-blue-900 pl-3 flex justify-between items-center">
           <div>
@@ -386,9 +448,9 @@
       </div>
     </section>
 
-    <!-- TAB 3: ALERTS & DISPATCH AUDIT LOG (WITH 5 EQUAL-WIDTH KPI CARDS & TIE-BREAKER LOGIC) -->
+    <!-- TAB 3: ALERTS & DISPATCH AUDIT LOG -->
     <section id="viewDashboard" class="space-y-4 hidden">
-      <!-- 5 EQUAL-WIDTH CARDS -->
+      <!-- 5 EQUAL-WIDTH KPI CARDS -->
       <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2.5">
         <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-sm w-full">
           <p class="text-[10px] text-slate-500 font-bold uppercase truncate">Total Students</p>
@@ -412,7 +474,7 @@
         </div>
       </div>
 
-      <!-- Critical Defaulters (Top 10 + Chronological Tie-Breaker + Expand Toggle + Dispatch Badges) -->
+      <!-- Critical Defaulters -->
       <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 space-y-3">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b pb-2">
           <div>
@@ -480,7 +542,7 @@
       </div>
     </section>
 
-    <!-- TAB 4: REPORTS (WITH EXECUTIVE MONTHLY DIGEST WHATSAPP MODAL) -->
+    <!-- TAB 4: REPORTS (WITH STAR STUDENTS SHOWCASE & EXECUTIVE MONTHLY DIGEST) -->
     <section id="viewReports" class="space-y-4 hidden">
       <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 space-y-3">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-2 border-b pb-3">
@@ -544,14 +606,79 @@
           </table>
         </div>
       </div>
+
+      <!-- REQUIREMENT 4: STAR & COMMENDABLE STUDENTS RECOGNITION SHOWCASE (0 TO 4 DEFAULTS) -->
+      <div class="bg-white p-5 rounded-xl shadow-sm border border-emerald-200 space-y-4">
+        <div class="border-l-4 border-emerald-600 pl-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div>
+            <h3 class="text-xs font-bold text-emerald-950 uppercase tracking-wide flex items-center gap-1.5">
+              <i class="fa-solid fa-star text-amber-500"></i>
+              <span>STAR & COMMENDABLE STUDENTS RECOGNITION (0 TO 4 DEFAULTS)</span>
+            </h3>
+            <p class="text-[11px] text-slate-500 mt-0.5">Appreciation list for well-behaved students with 4 or fewer defaults, sorted from 0 defaults upwards.</p>
+          </div>
+          <button onclick="shareGoodStudentsWhatsApp()" class="px-3 py-1.5 bg-emerald-700 hover:bg-emerald-600 text-white text-xs font-bold rounded-lg shadow flex items-center gap-1.5 transition whitespace-nowrap">
+            <i class="fa-brands fa-whatsapp text-sm"></i> Share Appreciation on WhatsApp
+          </button>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-xs">
+          <div>
+            <label class="block font-bold text-slate-600 mb-1">Section</label>
+            <select id="gsSectionSelect" onchange="renderGoodStudentsReport()" class="w-full p-2 border rounded-lg bg-white font-semibold">
+              <option value="Morning">Morning</option>
+              <option value="Afternoon">Afternoon</option>
+              <option value="Whole School">Whole School</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-600 mb-1">Semester</label>
+            <select id="gsSemesterSelect" onchange="renderGoodStudentsReport()" class="w-full p-2 border rounded-lg bg-white font-semibold">
+              <option value="Semester 1">Semester 1</option>
+              <option value="Semester 2">Semester 2</option>
+              <option value="All">All Semesters</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-600 mb-1">Period Scope</label>
+            <select id="gsPeriodSelect" onchange="renderGoodStudentsReport()" class="w-full p-2 border rounded-lg bg-white font-semibold">
+              <option value="semester">Active Semester</option>
+              <option value="month">This Month Only</option>
+              <option value="year">Whole Academic Year</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-600 mb-1">Class / Division</label>
+            <select id="gsClassSelect" onchange="renderGoodStudentsReport()" class="w-full p-2 border rounded-lg bg-white font-bold text-emerald-950">
+              <option value="">Select a Class...</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="border border-emerald-100 rounded-lg overflow-x-auto">
+          <table class="w-full text-left text-[11px]">
+            <thead class="bg-emerald-50 text-emerald-950">
+              <tr>
+                <th class="p-2 border-b w-12 text-center">Roll</th>
+                <th class="p-2 border-b font-bold">Student Full Name</th>
+                <th class="p-2 border-b text-center w-24">Defaults Count</th>
+                <th class="p-2 border-b">Recognition / Standing</th>
+              </tr>
+            </thead>
+            <tbody id="goodStudentsTableBody" class="divide-y divide-slate-100">
+              <tr><td colspan="4" class="p-3 text-center text-slate-400">Select a Class above to see the appreciation list.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </section>
 
-    <!-- TAB 5: DYNAMIC WARNING LETTER (UP TO 15 INCIDENTS) -->
+    <!-- TAB 5: DYNAMIC WARNING LETTER (UP TO 20 INCIDENTS ON SINGLE A4) -->
     <section id="viewWarningLetter" class="space-y-4 hidden">
       <div class="bg-white p-3.5 rounded-xl shadow-sm border border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-3">
         <div>
           <h2 class="font-bold text-sm text-slate-800">Formal Warning Letter Generator</h2>
-          <p class="text-[11px] text-slate-500">Issue official warning document to any student</p>
+          <p class="text-[11px] text-slate-500">Issue an official warning document with proportional layout (up to 20 defaults on one A4 page)</p>
         </div>
         
         <div class="flex items-center gap-2">
@@ -572,22 +699,22 @@
         </div>
       </div>
 
-      <!-- Printable A4 Area -->
-      <div id="printableWarningArea" class="bg-white p-6 md:p-8 rounded-xl border border-slate-300 text-xs space-y-3 shadow-sm">
-        <div class="text-center border-b pb-2 space-y-1">
-          <div class="flex justify-center mb-1">
-            <img id="letterSchoolLogo" src="" alt="Logo" class="w-11 h-11 object-contain">
+      <!-- Printable A4 Area (Calibrated to fit up to 20 defaults onto 1 page) -->
+      <div id="printableWarningArea" class="bg-white p-5 md:p-7 rounded-xl border border-slate-300 text-xs space-y-2 shadow-sm">
+        <div class="text-center border-b pb-1.5 space-y-0.5">
+          <div class="flex justify-center mb-0.5">
+            <img id="letterSchoolLogo" src="" alt="Logo" class="w-9 h-9 object-contain">
           </div>
-          <h1 class="text-base md:text-lg font-black text-blue-950 uppercase tracking-wide">MIZAAN ENGLISH SCHOOL, LATUR</h1>
-          <p class="text-[10px] md:text-[11px] text-slate-500 font-medium">Student Discipline & Academic Default Management Office</p>
-          <div id="wlHeaderBadge" class="inline-block bg-red-50 border border-red-300 text-red-700 px-3 py-0.5 rounded text-[11px] font-extrabold uppercase mt-1">
+          <h1 class="text-sm md:text-base font-black text-blue-950 uppercase tracking-wide">MIZAAN ENGLISH SCHOOL, LATUR</h1>
+          <p class="text-[9px] md:text-[10px] text-slate-500 font-medium">Student Discipline & Academic Default Management Office</p>
+          <div id="wlHeaderBadge" class="inline-block bg-red-50 border border-red-300 text-red-700 px-2.5 py-0.2 rounded text-[10px] font-extrabold uppercase mt-0.5">
             FORMAL WARNING LETTER (DEFAULT NOTICE)
           </div>
         </div>
-        <div class="flex justify-between text-[11px]">
+        <div class="flex justify-between text-[10px] wl-metadata">
           <div>
             <p class="text-slate-500">To, The Parent / Guardian of:</p>
-            <p class="font-black text-sm text-slate-900" id="wlStudentName">-</p>
+            <p class="font-black text-xs text-slate-900" id="wlStudentName">-</p>
             <p id="wlStudentMeta" class="text-slate-700">-</p>
           </div>
           <div class="text-right">
@@ -595,83 +722,47 @@
             <p><strong>Section:</strong> <span id="wlSection">-</span></p>
           </div>
         </div>
-        <div class="bg-slate-50 p-2 rounded border border-slate-200 font-bold text-slate-800 text-[11px]">
+        <div class="bg-slate-50 p-1.5 rounded border border-slate-200 font-bold text-slate-800 text-[10px] wl-subject">
           Subject: Formal Warning Notice Regarding Repeated Discipline / Academic Defaults
         </div>
-        <p class="leading-relaxed text-justify text-[11px]" id="wlMainParagraph">
+        <p class="leading-tight text-justify text-[10px]" id="wlMainParagraph">
           Dear Parent / Guardian,<br>
           This is to formally inform you that your ward has reached recorded discipline/academic defaults. The school has observed repeated concerns requiring immediate correction at home and school.
         </p>
+
+        <!-- Dynamic Notice if defaults exceed 20 -->
+        <div id="wlExceedsNotice" class="hidden text-[9px] text-amber-900 bg-amber-50 border border-amber-300 px-2 py-0.5 rounded text-center font-bold">
+          Note: This document displays the latest 20 recorded defaults out of total registered incidents.
+        </div>
         
-        <table class="w-full text-left border-collapse border border-slate-300 text-[10px]">
+        <!-- Table displaying up to 20 defaults -->
+        <table class="w-full text-left border-collapse border border-slate-300 text-[9px] leading-tight">
           <thead class="bg-slate-100">
             <tr>
-              <th class="border border-slate-300 py-1 px-1.5 text-center w-10">#</th>
-              <th class="border border-slate-300 py-1 px-1.5 w-20">Date</th>
-              <th class="border border-slate-300 py-1 px-1.5 w-24">Type</th>
-              <th class="border border-slate-300 py-1 px-1.5 font-bold">Criterion</th>
-              <th class="border border-slate-300 py-1 px-1.5">Remarks</th>
-              <th class="border border-slate-300 py-1 px-1.5 text-center w-14">Teacher</th>
+              <th class="border border-slate-300 py-0.5 px-1 text-center w-8">#</th>
+              <th class="border border-slate-300 py-0.5 px-1.5 w-16">Date</th>
+              <th class="border border-slate-300 py-0.5 px-1.5 w-20">Type</th>
+              <th class="border border-slate-300 py-0.5 px-1.5 font-bold">Criterion</th>
+              <th class="border border-slate-300 py-0.5 px-1.5">Remarks</th>
+              <th class="border border-slate-300 py-0.5 px-1 text-center w-12">Tr</th>
             </tr>
           </thead>
           <tbody id="wlTableBody"></tbody>
         </table>
 
-        <p class="text-justify leading-relaxed text-[11px]" id="wlEscalationSentence">
+        <p class="text-justify leading-tight text-[10px]" id="wlEscalationSentence">
           Please treat this communication with highest priority. A compulsory meeting with school authorities is required. Further defaults will lead to stricter disciplinary actions under school policy.
         </p>
-        <div class="pt-6 grid grid-cols-2 gap-8 text-center text-[10px]">
-          <div class="border-t border-slate-500 pt-1 font-bold text-slate-800">Parent / Guardian Signature</div>
-          <div class="border-t border-slate-500 pt-1 font-bold text-slate-800">Principal / Academic Head</div>
+        <div class="pt-4 grid grid-cols-2 gap-8 text-center text-[9px] wl-signatures">
+          <div class="border-t border-slate-500 pt-0.5 font-bold text-slate-800">Parent / Guardian Signature</div>
+          <div class="border-t border-slate-500 pt-0.5 font-bold text-slate-800">Principal / Academic Head</div>
         </div>
       </div>
     </section>
 
-    <!-- TAB 6: SETTINGS (ACADEMIC YEAR PROMOTION & ACTIVE SEMESTER MASTER) -->
+    <!-- TAB 6: SETTINGS (REORDERED EXACTLY AS REQUESTED) -->
     <section id="viewSettings" class="space-y-5 hidden">
-      <!-- 1. School Logo Uploader Module -->
-      <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 space-y-3">
-        <div class="border-l-4 border-blue-900 pl-3">
-          <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wide">OFFICIAL SCHOOL LOGO & SHORTCUT ICON</h3>
-          <p class="text-[11px] text-slate-500 mt-0.5">Images are auto-compressed to permanently fit cloud storage and mobile app shortcuts.</p>
-        </div>
-        <div class="flex items-center gap-4 pt-1">
-          <div class="w-14 h-14 rounded-xl border border-slate-200 bg-slate-50 p-1 flex items-center justify-center overflow-hidden shrink-0">
-            <img id="settingsLogoPreview" src="" alt="Logo" class="w-full h-full object-contain">
-          </div>
-          <div class="space-y-1.5 flex-1 text-xs">
-            <input type="file" id="schoolLogoFileInput" accept="image/png, image/jpeg, image/webp" class="text-xs" onchange="handleSchoolLogoUpload(event)">
-            <p class="text-[10px] text-slate-400">Selecting any photo automatically scales it into a permanent 256×256 app shortcut icon.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- 2. Cloud Sync Module -->
-      <div class="bg-gradient-to-r from-blue-900 to-indigo-900 text-white p-5 rounded-xl shadow space-y-3">
-        <div class="flex justify-between items-center">
-          <div class="flex items-center gap-2">
-            <i class="fa-solid fa-cloud text-xl text-amber-300"></i>
-            <div>
-              <h3 class="text-xs font-black uppercase">MULTI-DEVICE CLOUD SYNC (MOBILE & PC)</h3>
-              <p class="text-[11px] text-blue-200">Syncs additions, defaults, edits, and removals across all phones and PCs in real time</p>
-            </div>
-          </div>
-          <span id="cloudStatusTag" class="px-2.5 py-1 rounded text-[10px] font-black bg-white/10">LOCAL MODE</span>
-        </div>
-        <p class="text-[11px] text-blue-100">Paste your Firebase project config below. If left blank, the app functions offline on this device.</p>
-        <textarea id="firebaseConfigInput" rows="3" placeholder='Paste your Firebase project config here...'
-                  class="w-full p-2.5 bg-slate-900 text-slate-100 rounded text-[11px] font-mono border border-slate-700 outline-none"></textarea>
-        <div class="flex gap-2">
-          <button onclick="saveAndConnectFirebase()" class="px-4 py-2 bg-amber-400 hover:bg-amber-300 text-blue-950 font-black rounded-lg text-xs shadow flex items-center gap-1.5">
-            <i class="fa-solid fa-link"></i> Connect & Sync Everywhere
-          </button>
-          <button onclick="disconnectFirebase()" class="px-4 py-2 bg-red-600 hover:bg-red-500 text-white font-bold rounded-lg text-xs shadow">
-            Disconnect
-          </button>
-        </div>
-      </div>
-
-      <!-- 3. Academic Terms & Promotion Settings Module (REQUIREMENT 1 & 2) -->
+      <!-- 1. ACADEMIC TERMS, PROMOTION & SEMESTER MASTER (AT TOP) -->
       <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 space-y-4">
         <div class="border-l-4 border-blue-900 pl-3">
           <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wide">ACADEMIC TERMS, PROMOTION & SEMESTER MASTER</h3>
@@ -714,7 +805,7 @@
         </div>
       </div>
 
-      <!-- 4. Criteria Master -->
+      <!-- 2. DISCIPLINE & ACADEMIC CRITERIA MASTER (AT TOP) -->
       <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 space-y-4">
         <div class="border-l-4 border-blue-900 pl-3 flex justify-between items-center">
           <div>
@@ -765,7 +856,7 @@
         </div>
       </div>
 
-      <!-- 5. Excel Data Backup & Sync Module -->
+      <!-- 3. EXCEL DATA BACKUP & SYNC MODULE -->
       <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 space-y-3">
         <div class="border-l-4 border-blue-900 pl-3">
           <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wide">EXCEL DATA BACKUP & SYNC</h3>
@@ -779,11 +870,53 @@
           <i class="fa-solid fa-file-excel text-emerald-400 text-2xl"></i>
         </button>
       </div>
+
+      <!-- 4. OFFICIAL SCHOOL LOGO & SHORTCUT ICON (BELOW EXCEL SYNC) -->
+      <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 space-y-3">
+        <div class="border-l-4 border-blue-900 pl-3">
+          <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wide">OFFICIAL SCHOOL LOGO & SHORTCUT ICON</h3>
+          <p class="text-[11px] text-slate-500 mt-0.5">Images are auto-compressed to permanently fit cloud storage and mobile app shortcuts.</p>
+        </div>
+        <div class="flex items-center gap-4 pt-1">
+          <div class="w-14 h-14 rounded-xl border border-slate-200 bg-slate-50 p-1 flex items-center justify-center overflow-hidden shrink-0">
+            <img id="settingsLogoPreview" src="" alt="Logo" class="w-full h-full object-contain">
+          </div>
+          <div class="space-y-1.5 flex-1 text-xs">
+            <input type="file" id="schoolLogoFileInput" accept="image/png, image/jpeg, image/webp" class="text-xs" onchange="handleSchoolLogoUpload(event)">
+            <p class="text-[10px] text-slate-400">Selecting any photo automatically scales it into a permanent 256×256 app shortcut icon.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. MULTI-DEVICE CLOUD SYNC (MOBILE & PC) (AT BOTTOM) -->
+      <div class="bg-gradient-to-r from-blue-900 to-indigo-900 text-white p-5 rounded-xl shadow space-y-3">
+        <div class="flex justify-between items-center">
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-cloud text-xl text-amber-300"></i>
+            <div>
+              <h3 class="text-xs font-black uppercase">MULTI-DEVICE CLOUD SYNC (MOBILE & PC)</h3>
+              <p class="text-[11px] text-blue-200">Syncs additions, defaults, edits, and removals across all phones and PCs in real time</p>
+            </div>
+          </div>
+          <span id="cloudStatusTag" class="px-2.5 py-1 rounded text-[10px] font-black bg-white/10">LOCAL MODE</span>
+        </div>
+        <p class="text-[11px] text-blue-100">Paste your Firebase project config below. If left blank, the app functions offline on this device.</p>
+        <textarea id="firebaseConfigInput" rows="3" placeholder='Paste your Firebase project config here...'
+                  class="w-full p-2.5 bg-slate-900 text-slate-100 rounded text-[11px] font-mono border border-slate-700 outline-none"></textarea>
+        <div class="flex gap-2">
+          <button onclick="saveAndConnectFirebase()" class="px-4 py-2 bg-amber-400 hover:bg-amber-300 text-blue-950 font-black rounded-lg text-xs shadow flex items-center gap-1.5">
+            <i class="fa-solid fa-link"></i> Connect & Sync Everywhere
+          </button>
+          <button onclick="disconnectFirebase()" class="px-4 py-2 bg-red-600 hover:bg-red-500 text-white font-bold rounded-lg text-xs shadow">
+            Disconnect
+          </button>
+        </div>
+      </div>
     </section>
 
   </main>
 
-  <!-- MODAL: INDIVIDUAL STUDENT INCIDENT INSPECTOR (REQUIREMENT 6) -->
+  <!-- MODAL: INDIVIDUAL STUDENT INCIDENT INSPECTOR (WITH DELETE ACTION) -->
   <div id="studentHistoryModal" class="fixed inset-0 bg-slate-950/70 z-50 flex items-center justify-center p-3 hidden">
     <div class="bg-white w-full max-w-lg rounded-2xl shadow-2xl p-5 space-y-3 text-xs max-h-[92vh] overflow-y-auto">
       <div class="flex justify-between items-center border-b pb-2">
@@ -813,11 +946,13 @@
         <table class="w-full text-left text-[11px]">
           <thead class="bg-slate-100 text-slate-700 sticky top-0">
             <tr>
+              <th class="p-1.5 border-b">#</th>
               <th class="p-1.5 border-b">Date</th>
               <th class="p-1.5 border-b">Sem</th>
               <th class="p-1.5 border-b font-bold">Criterion</th>
               <th class="p-1.5 border-b">Remarks</th>
               <th class="p-1.5 border-b">Tr</th>
+              <th class="p-1.5 border-b text-center text-red-600">Action</th>
             </tr>
           </thead>
           <tbody id="histModalTableBody" class="divide-y divide-slate-100"></tbody>
@@ -835,7 +970,7 @@
     </div>
   </div>
 
-  <!-- MODAL: EXECUTIVE MONTHLY DIGEST WITH WHATSAPP SHARING (REQUIREMENT 5) -->
+  <!-- MODAL: EXECUTIVE MONTHLY DIGEST WITH WHATSAPP SHARING -->
   <div id="executiveDigestModal" class="fixed inset-0 bg-slate-950/70 z-50 flex items-center justify-center p-3 hidden">
     <div class="bg-white w-full max-w-md rounded-2xl shadow-2xl p-5 space-y-4 text-xs">
       <div class="flex justify-between items-center border-b pb-2">
@@ -1010,7 +1145,7 @@
     let incidents = JSON.parse(localStorage.getItem('mizaan_incidents') || '[]');
     let dispatches = JSON.parse(localStorage.getItem('mizaan_dispatches') || '[]');
     
-    // MIGRATION / NORMALIZATION: Ensure all historical data has AcademicYear & Semester & Section
+    // Normalization / Migration verification
     let didMigrate = false;
     students.forEach(s => {
       if (!s.section) { s.section = "Morning"; didMigrate = true; }
@@ -1044,7 +1179,6 @@
       return n + (s[(v - 20) % 10] || s[v] || s[0]);
     }
 
-    // --- DYNAMIC ACTIVE DEFAULTS CALCULATOR PER SEMESTER & YEAR ---
     function getStudentSemesterDefaultsCount(studentName, targetSemester = settings.activeSemester, targetYear = settings.academicYear) {
       if (!studentName) return 0;
       return incidents.filter(i => 
@@ -1054,7 +1188,6 @@
       ).length;
     }
 
-    // --- PWA SHORTCUT MANIFEST GENERATOR ---
     function updateWebManifest(iconUrl) {
       const manifestObj = {
         name: "MIZAAN ENGLISH SCHOOL",
@@ -1128,7 +1261,6 @@
       reader.readAsDataURL(file);
     }
 
-    // --- CLOUD FIREBASE SYNC ---
     function initCloudConnection() {
       const savedConfigStr = localStorage.getItem('mizaan_firebase_config');
       if (savedConfigStr) {
@@ -1148,7 +1280,6 @@
           document.getElementById('syncText').innerText = "Cloud Live";
           document.getElementById('firebaseConfigInput').value = savedConfigStr;
 
-          // 1. Settings & Criteria Listener
           cloudDb.collection('settings').doc('school_config').onSnapshot(doc => {
             if (doc.exists) {
               const cloudSettings = doc.data();
@@ -1166,7 +1297,6 @@
             }
           });
 
-          // 2. Students Listener
           cloudDb.collection('students').onSnapshot(snap => {
             students = [];
             snap.forEach(doc => {
@@ -1179,9 +1309,9 @@
             renderStudentRoster();
             populateLetterStudentDropdown();
             populateClassDefaulterDropdown();
+            populateGoodStudentsDropdown();
           });
 
-          // 3. Incidents Listener
           cloudDb.collection('incidents').onSnapshot(snap => {
             incidents = [];
             snap.forEach(doc => {
@@ -1196,9 +1326,9 @@
             renderCriticalStudents();
             renderTodayActivityFeed();
             renderClassDefaulterReport();
+            renderGoodStudentsReport();
           });
 
-          // 4. Dispatches Log Listener
           cloudDb.collection('dispatches').onSnapshot(snap => {
             dispatches = [];
             snap.forEach(doc => dispatches.push({ id: doc.id, ...doc.data() }));
@@ -1251,7 +1381,6 @@
       document.getElementById('kpiStudents').innerText = scopedStudents.length;
       document.getElementById('kpiDefaults').innerText = scopedIncidents.length;
 
-      // Unique defaulters for selected section and semester
       const uniqueDefaultersSet = new Set(scopedIncidents.map(i => i.studentName));
       document.getElementById('kpiUniqueDefaulters').innerText = uniqueDefaultersSet.size;
       
@@ -1264,14 +1393,12 @@
       document.getElementById('kpiWarnings').innerText = warnCount;
       document.getElementById('kpiManagement').innerText = mgmtCount;
 
-      // Update scope badges
       const scopeBadge = document.getElementById('recordSectionScopeBadge');
       if (scopeBadge) scopeBadge.innerText = currentActiveSection;
       const semDisplay = document.getElementById('quickSemesterDisplay');
       if (semDisplay) semDisplay.value = `${settings.activeSemester} (${settings.academicYear})`;
     }
 
-    // --- REQUIREMENT 3 & 4: SECTION SCOPE CONTROLLER ---
     function onGlobalSectionChanged(newSec) {
       currentActiveSection = newSec;
       localStorage.setItem('mizaan_active_section', currentActiveSection);
@@ -1280,10 +1407,10 @@
       renderCriticalStudents();
       populateLetterStudentDropdown();
       populateClassDefaulterDropdown();
+      populateGoodStudentsDropdown();
       showToast(`Active Section: ${currentActiveSection}`);
     }
 
-    // --- REQUIREMENT 2: ACTIVE SEMESTER CHANGER (CLEAN SLATE RESET) ---
     async function onSemesterScopeChanged(newSemester) {
       settings.activeSemester = newSemester;
       saveState();
@@ -1297,10 +1424,10 @@
       renderCriticalStudents();
       populateLetterStudentDropdown();
       renderClassDefaulterReport();
+      renderGoodStudentsReport();
       showToast(`Active Semester set to ${newSemester}. Active counters refreshed.`);
     }
 
-    // --- REQUIREMENT 1: ACADEMIC YEAR PROMOTION LOGIC ---
     async function promptPromoteToNextAcademicYear() {
       const currentYear = settings.academicYear || "2026-27";
       const parts = currentYear.split('-');
@@ -1329,7 +1456,6 @@
 
       showToast("Promoting students to new academic year...");
 
-      // Promote classes
       students.forEach(s => {
         const num = parseInt(s.class);
         if (!isNaN(num)) {
@@ -1367,6 +1493,7 @@
       renderStudentRoster();
       renderCriticalStudents();
       populateClassDefaulterDropdown();
+      populateGoodStudentsDropdown();
       alert(`Success! All students have been promoted to Academic Year ${nextYear} under Semester 1.`);
     }
 
@@ -1527,10 +1654,12 @@
       }
 
       let currentSemCount = getStudentSemesterDefaultsCount(selectedStudent.name, settings.activeSemester, settings.academicYear);
+      let globalYearDefaultNo = incidents.filter(i => i.studentName === selectedStudent.name && (!settings.academicYear || i.academicYear === settings.academicYear)).length;
       const recordedCriteriaNames = Array.from(selectedCriteria);
 
       for (const critName of selectedCriteria) {
         currentSemCount++;
+        globalYearDefaultNo++;
         const critObj = settings.criteria.find(c => c.name === critName) || { type: 'Discipline' };
         const inc = {
           incidentId: `${dateStr.replace(/-/g,'')}-${String(Math.floor(1000 + Math.random() * 9000))}`,
@@ -1549,7 +1678,7 @@
           criterion: critName,
           remarks: remarks || 'None',
           teacherInitials: teacher,
-          defaultNo: currentSemCount,
+          defaultNo: globalYearDefaultNo,
           studentTotalDefaults: currentSemCount,
           thresholdStatus: currentSemCount >= 6 ? 'MANAGEMENT CONCERN' : (currentSemCount === 5 ? 'WARNING LETTER' : 'NORMAL'),
           entryDateTime: new Date().toISOString(),
@@ -1557,8 +1686,10 @@
         };
 
         if (isCloudConnected && cloudDb) {
-          await cloudDb.collection('incidents').add(inc);
+          const docRef = await cloudDb.collection('incidents').add(inc);
+          inc.id = docRef.id;
         } else {
+          inc.id = 'INC-' + Date.now() + '-' + Math.random().toString(36).substr(2, 5);
           incidents.push(inc);
         }
       }
@@ -1593,11 +1724,11 @@
       renderCriticalStudents();
       renderTodayActivityFeed();
       renderClassDefaulterReport();
+      renderGoodStudentsReport();
 
       openWhatsAppDispatchModal();
     };
 
-    // --- WHATSAPP DISPATCH MODAL ---
     function openWhatsAppDispatchModal() {
       if (!currentIncidentForWhatsApp || !currentIncidentForWhatsApp.student) {
         const sel = document.getElementById('wlStudentSelect');
@@ -1623,15 +1754,25 @@
         banner.className = "hidden";
       }
 
-      msg = `*OFFICIAL NOTICE: MIZAAN ENGLISH SCHOOL, LATUR*\n` +
-            `*FORMAL WARNING NOTICE (${ordinalUpper} DEFAULT)*\n\n` +
-            `Dear Parent / Guardian of *${st.name}* (Class: ${st.class}-${st.division}, Roll No: ${st.rollNo}),\n\n` +
-            `This is to inform you that your ward has reached the *${ordinalLower} recorded discipline/academic default* for ${settings.activeSemester} on ${data.date}.\n` +
-            `• Default #${count}: ${data.criteria}\n` +
-            `• Details / Remarks: ${data.remarks}\n` +
-            `• Teacher: ${data.teacher}\n\n` +
-            `*ACTION REQUIRED:* Kindly counsel your ward immediately at home. Please contact the school office / Academic Head regarding your ward's repeated defaults to take necessary corrective action.\n\n` +
-            `- Principal / Academic Head\nMizaan English School, Latur`;
+      const allDefaults = Array.isArray(data.incidents) ? data.incidents : [];
+      const incidentLines = allDefaults.length
+        ? allDefaults.map((item, idx) => {
+            const no = item.displayNo || item.defaultNo || (idx + 1);
+            const when = item.date ? ` (${item.date}${item.time ? ', ' + item.time : ''})` : '';
+            const rawDetails = String(item.remarks || '').replace(/\s+/g, ' ').trim();
+            const shortDetails = rawDetails && rawDetails !== 'None' ? (rawDetails.length > 110 ? rawDetails.slice(0, 107) + '…' : rawDetails) : '';
+            const details = shortDetails ? ` — ${shortDetails}` : '';
+            return `• #${no} ${item.criterion || item.type || 'Default'}${when}${details}`;
+          }).join('\n')
+        : `• #${count} ${data.criteria || 'Repeated discipline/academic default'} — ${data.remarks || 'Details recorded by the school'}`;
+
+      msg = `*MIZAAN ENGLISH SCHOOL, LATUR*\n` +
+            `*STRICT FORMAL WARNING — ${count} DEFAULT${count === 1 ? '' : 'S'} RECORDED*\n\n` +
+            `Dear Parent/Guardian of *${st.name}* (Class ${st.class}-${st.division}, Roll ${st.rollNo}),\n\n` +
+            `Your ward has repeated discipline/academic defaults. The incidents recorded during academic year ${settings.academicYear} are:\n` +
+            `${incidentLines}\n\n` +
+            `*MANDATORY ACTION:* You are required to visit Mizaan English School and meet the Principal/Academic Head as soon as possible to discuss these repeated defaults. Please do not ignore this notice. Further defaults may result in stricter action under school policy.\n\n` +
+            `Principal / Academic Head\nMizaan English School, Latur`;
 
       document.getElementById('waMessagePreview').innerText = msg;
       renderWhatsAppParentActionArea('father');
@@ -1838,7 +1979,7 @@
           </div>
           <div class="text-right">
             <span class="text-[10px] font-mono text-slate-500 font-bold">${i.time}</span>
-            <span class="block text-[9px] font-extrabold text-blue-800">Def #${i.defaultNo}</span>
+            <span class="block text-[9px] font-extrabold text-blue-800">Def #${getIncidentDisplayNumber(i)}</span>
           </div>
         </div>
       `).join('');
@@ -1855,7 +1996,121 @@
       });
     }
 
-    // --- REQUIREMENT 10: EXCEL IMPORTER WITH FATHER & MOTHER NUMBERS ---
+    // Escape imported/user-entered values before inserting them into preview HTML.
+    function escapeHtml(value) {
+      return String(value == null ? '' : value).replace(/[&<>"']/g, ch => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      }[ch]));
+    }
+
+    function shortenText(value, maxLength = 100) {
+      const text = String(value == null ? '' : value).replace(/\s+/g, ' ').trim();
+      return text.length > maxLength ? text.slice(0, Math.max(1, maxLength - 1)).trimEnd() + '…' : text;
+    }
+
+    let pendingPasteRows = [];
+    function parsePastedStudentRows(rawText) {
+      const lines = String(rawText || '').replace(/\r/g, '').split('\n').filter(line => line.trim());
+      const parsed = [];
+      const defaultSection = currentActiveSection === 'Whole School' ? 'Morning' : currentActiveSection;
+      for (const line of lines) {
+        // Excel copy/paste is tab-delimited; accept comma-delimited rows as a convenience.
+        const row = line.includes('\t') ? line.split('\t') : line.split(',');
+        const cells = row.map(cell => String(cell == null ? '' : cell).trim());
+        const first = (cells[0] || '').toLowerCase();
+        const fifth = (cells[4] || '').toLowerCase();
+        if (first.includes('section') || first === 'roll' || fifth.includes('student name') || first.includes('student name')) continue;
+
+        let sec = defaultSection, grp = '1', cls = '', div = 'A', name = '', roll = '-', gender = 'Male', fMob = '', mMob = '';
+        if (cells.length >= 9) {
+          [sec, grp, cls, div, name, roll, gender, fMob, mMob] = cells;
+        } else if (cells.length >= 7) {
+          [sec, grp, cls, div, name, roll, gender] = cells;
+        } else if (cells.length === 5) {
+          [cls, div, name, roll, gender] = cells;
+        } else {
+          continue;
+        }
+        if (!name || !cls || !div) continue;
+        parsed.push({
+          section: String(sec || defaultSection).trim(),
+          group: String(grp || '1').trim(),
+          class: String(cls).trim(),
+          division: String(div).trim().toUpperCase(),
+          name: String(name).trim(),
+          rollNo: String(roll || '-').trim(),
+          gender: String(gender || 'Male').trim(),
+          fatherMobile: String(fMob || '').replace(/\D/g, ''),
+          motherMobile: String(mMob || '').replace(/\D/g, ''),
+          totalDefaults: 0,
+          thresholdStatus: 'NORMAL'
+        });
+      }
+      return parsed;
+    }
+
+    function previewPastedStudents() {
+      const raw = document.getElementById('pasteStudentTextarea').value;
+      pendingPasteRows = parsePastedStudentRows(raw);
+      const preview = document.getElementById('pastePreviewSection');
+      const tbody = document.getElementById('previewTableBody');
+      if (!pendingPasteRows.length) {
+        preview.classList.add('hidden');
+        showToast('No valid student rows found. Check the columns and try again.', true);
+        return;
+      }
+      tbody.innerHTML = pendingPasteRows.slice(0, 100).map(r => `
+        <tr>
+          <td class="p-1.5 border-b">${escapeHtml(r.section)}</td>
+          <td class="p-1.5 border-b">${escapeHtml(r.group)}</td>
+          <td class="p-1.5 border-b">${escapeHtml(r.class)}-${escapeHtml(r.division)}</td>
+          <td class="p-1.5 border-b">${escapeHtml(r.rollNo)}</td>
+          <td class="p-1.5 border-b font-bold">${escapeHtml(r.name)}</td>
+          <td class="p-1.5 border-b">${escapeHtml(r.fatherMobile || '-')}</td>
+          <td class="p-1.5 border-b">${escapeHtml(r.motherMobile || '-')}</td>
+        </tr>`).join('');
+      document.getElementById('pastePreviewCount').textContent = `${pendingPasteRows.length} students ready to import`;
+      preview.classList.remove('hidden');
+      showToast(`Preview ready: ${pendingPasteRows.length} student(s). Review before saving.`);
+    }
+
+    function clearPasteArea() {
+      document.getElementById('pasteStudentTextarea').value = '';
+      document.getElementById('pastePreviewSection').classList.add('hidden');
+      document.getElementById('previewTableBody').innerHTML = '';
+      pendingPasteRows = [];
+    }
+
+    async function commitPastedStudents() {
+      if (!pendingPasteRows.length) return showToast('Preview valid student rows before saving.', true);
+      const rows = pendingPasteRows.map(r => ({ ...r }));
+      try {
+        if (isCloudConnected && cloudDb) {
+          // Firestore permits at most 500 writes per batch. Use bounded batches for large rosters.
+          for (let i = 0; i < rows.length; i += 450) {
+            const batch = cloudDb.batch();
+            rows.slice(i, i + 450).forEach(stu => batch.set(cloudDb.collection('students').doc(), stu));
+            await batch.commit();
+          }
+        } else {
+          rows.forEach(s => students.push({ id: 'STU-' + Date.now() + '-' + Math.random().toString(36).slice(2, 7), ...s }));
+          saveState();
+        }
+        pendingPasteRows = [];
+        document.getElementById('pasteStudentTextarea').value = '';
+        document.getElementById('pastePreviewSection').classList.add('hidden');
+        document.getElementById('previewTableBody').innerHTML = '';
+        renderStudentRoster();
+        populateLetterStudentDropdown();
+        populateClassDefaulterDropdown();
+        populateGoodStudentsDropdown();
+        showToast(`Successfully imported ${rows.length} student(s).`);
+      } catch (err) {
+        console.error('Pasted student import failed:', err);
+        showToast('Import failed or was incomplete. Do not retry until the roster and cloud records have been checked.', true);
+      }
+    }
+
     let pendingUploadRows = [];
     function handleStudentExcelFileSelected(e) {
       const file = e.target.files[0];
@@ -1907,12 +2162,12 @@
 
           document.getElementById('uploadPreviewTableBody').innerHTML = pendingUploadRows.slice(0, 50).map(r => `
             <tr>
-              <td class="p-1.5 border-b">${r.section}</td>
-              <td class="p-1.5 border-b font-bold">${r.class}-${r.division}</td>
-              <td class="p-1.5 border-b font-mono">${r.rollNo}</td>
-              <td class="p-1.5 border-b font-bold">${r.name}</td>
-              <td class="p-1.5 border-b font-mono text-emerald-800 font-bold">${r.fatherMobile || '-'}</td>
-              <td class="p-1.5 border-b font-mono text-indigo-800 font-bold">${r.motherMobile || '-'}</td>
+              <td class="p-1.5 border-b">${escapeHtml(r.section)}</td>
+              <td class="p-1.5 border-b font-bold">${escapeHtml(r.class)}-${escapeHtml(r.division)}</td>
+              <td class="p-1.5 border-b font-mono">${escapeHtml(r.rollNo)}</td>
+              <td class="p-1.5 border-b font-bold">${escapeHtml(r.name)}</td>
+              <td class="p-1.5 border-b font-mono text-emerald-800 font-bold">${escapeHtml(r.fatherMobile || '-')}</td>
+              <td class="p-1.5 border-b font-mono text-indigo-800 font-bold">${escapeHtml(r.motherMobile || '-')}</td>
             </tr>
           `).join('');
           document.getElementById('uploadPreviewCount').innerText = `${pendingUploadRows.length} Students Detected`;
@@ -1945,6 +2200,7 @@
       renderStudentRoster();
       populateLetterStudentDropdown();
       populateClassDefaulterDropdown();
+      populateGoodStudentsDropdown();
       showToast("Roster with parents' numbers imported!");
     }
 
@@ -1975,6 +2231,7 @@
       renderStudentRoster();
       populateLetterStudentDropdown();
       populateClassDefaulterDropdown();
+      populateGoodStudentsDropdown();
       showToast(`Student ${name} registered!`);
       document.getElementById('newName').value = '';
       document.getElementById('newRoll').value = '';
@@ -2044,10 +2301,98 @@
       renderStudentRoster();
       populateLetterStudentDropdown();
       populateClassDefaulterDropdown();
+      populateGoodStudentsDropdown();
       showToast("Student details & numbers updated!");
     }
 
-    // --- REQUIREMENT 6: INDIVIDUAL STUDENT DEFAULTS INSPECTOR & WHATSAPP SHARE ---
+    // Stable chronology for numbering: incident date, time, then recorded timestamp.
+    function incidentChronologyValue(inc) {
+      const rawDate = String(inc.date || '').trim();
+      let datePart = 0;
+      let m = rawDate.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+      if (m) datePart = Date.UTC(+m[1], +m[2] - 1, +m[3]);
+      else {
+        m = rawDate.match(/^(\d{1,2})[\/-](\d{1,2})[\/-](\d{4})$/);
+        if (m) datePart = Date.UTC(+m[3], +m[2] - 1, +m[1]);
+        else {
+          const parsed = Date.parse(rawDate);
+          if (!Number.isNaN(parsed)) datePart = new Date(parsed).setUTCHours(0,0,0,0);
+        }
+      }
+      const rawTime = String(inc.time || '').trim();
+      let timePart = 0;
+      const tm = rawTime.match(/(\d{1,2}):(\d{2})(?::(\d{2}))?\s*(AM|PM)?/i);
+      if (tm) {
+        let h = +tm[1], min = +tm[2], sec = +(tm[3] || 0);
+        if (tm[4]) { const ap = tm[4].toUpperCase(); if (ap === 'PM' && h < 12) h += 12; if (ap === 'AM' && h === 12) h = 0; }
+        timePart = ((h * 60 + min) * 60 + sec) * 1000;
+      }
+      const stamp = Date.parse(inc.entryDateTime || inc.createdAt || '') || Number(inc.timestamp || 0) || 0;
+      return { datePart, timePart, stamp, tie: String(inc.id || inc.incidentId || '') };
+    }
+
+    function compareIncidentsChronologically(a, b) {
+      const x = incidentChronologyValue(a), y = incidentChronologyValue(b);
+      return (x.datePart - y.datePart) || (x.timePart - y.timePart) || (x.stamp - y.stamp) || x.tie.localeCompare(y.tie);
+    }
+
+    function sameNumberingGroup(a, b) {
+      // Consecutive incident numbers span both semesters within an academic year.
+      // Archived academic years remain separately numbered.
+      return a.studentName === b.studentName &&
+        String(a.academicYear || settings.academicYear || '') === String(b.academicYear || settings.academicYear || '');
+    }
+
+    function incidentPeriodKey(inc) {
+      return `${inc.academicYear || settings.academicYear}|${inc.semester || settings.activeSemester}`;
+    }
+
+    function getIncidentDisplayNumber(incident) {
+      const chronological = incidents.filter(item => sameNumberingGroup(item, incident)).sort(compareIncidentsChronologically);
+      const index = chronological.findIndex(item => item === incident ||
+        (incident.id && item.id === incident.id) ||
+        (incident.incidentId && item.incidentId === incident.incidentId));
+      return index >= 0 ? index + 1 : (Number(incident.defaultNo) || 1);
+    }
+
+    function thresholdForPeriodCount(count) {
+      return count >= 6 ? 'MANAGEMENT CONCERN' : (count === 5 ? 'WARNING LETTER' : 'NORMAL');
+    }
+
+    function applyWarningLetterScale(defaultCount) {
+      const root = document.getElementById('printableWarningArea');
+      if (!root) return;
+      const n = Math.max(0, Math.min(20, Number(defaultCount) || 0));
+      root.dataset.defaultCount = String(n);
+      root.classList.remove('wl-spacious', 'wl-medium', 'wl-compact', 'wl-dense');
+      let scale;
+      if (n <= 4) {
+        root.classList.add('wl-spacious');
+        scale = { body: 17, small: 15, table: 15, cellY: 8, cellX: 7, gap: 12, header: 28, pad: 8, tableMin: 75 };
+      } else if (n <= 8) {
+        root.classList.add('wl-medium');
+        scale = { body: 15, small: 13.5, table: 13.5, cellY: 6, cellX: 5, gap: 8, header: 24, pad: 7, tableMin: 80 };
+      } else if (n <= 14) {
+        root.classList.add('wl-compact');
+        scale = { body: 12.5, small: 11, table: 11, cellY: 4, cellX: 3.5, gap: 4, header: 21, pad: 5, tableMin: 90 };
+      } else {
+        root.classList.add('wl-dense');
+        scale = { body: 10.5, small: 9.5, table: 10, cellY: 3, cellX: 2.5, gap: 2.5, header: 18, pad: 4, tableMin: 125 };
+      }
+      root.style.setProperty('--wl-body-font', scale.body + 'px');
+      root.style.setProperty('--wl-small-font', scale.small + 'px');
+      root.style.setProperty('--wl-table-font', scale.table + 'px');
+      root.style.setProperty('--wl-cell-y', scale.cellY + 'px');
+      root.style.setProperty('--wl-cell-x', scale.cellX + 'px');
+      root.style.setProperty('--wl-section-gap', scale.gap + 'px');
+      root.style.setProperty('--wl-header-font', scale.header + 'px');
+      root.style.setProperty('--wl-table-min-height', scale.tableMin + 'mm');
+      root.style.padding = scale.pad + 'mm';
+      const signature = root.querySelector('.wl-signatures');
+      if (signature) signature.style.paddingTop = (n <= 4 ? 7 : n <= 8 ? 5 : n <= 14 ? 3 : 1.5) + 'mm';
+    }
+
+    // --- REQUIREMENT 2: DELETE INDIVIDUAL DEFAULT WITH REAL-TIME RECALCULATION ---
     function viewStudentDefaultsHistory(studentId) {
       const st = students.find(s => s.id === studentId);
       if (!st) return;
@@ -2066,31 +2411,157 @@
 
       const tb = document.getElementById('histModalTableBody');
       if (sIncidents.length === 0) {
-        tb.innerHTML = `<tr><td colspan="5" class="p-3 text-center text-slate-400 italic">No defaults recorded for this student in ${settings.academicYear}.</td></tr>`;
+        tb.innerHTML = `<tr><td colspan="7" class="p-3 text-center text-slate-400 italic">No defaults recorded for this student in ${settings.academicYear}.</td></tr>`;
       } else {
-        sIncidents.sort((a,b) => (b.date || '').localeCompare(a.date || ''));
-        tb.innerHTML = sIncidents.map(i => `
+        sIncidents.sort(compareIncidentsChronologically);
+        const sequenceByGroup = new Map();
+        tb.innerHTML = sIncidents.map(i => {
+          const groupKey = `${i.studentName}|${i.academicYear || settings.academicYear}`;
+          const next = (sequenceByGroup.get(groupKey) || 0) + 1;
+          sequenceByGroup.set(groupKey, next);
+          return `
           <tr>
-            <td class="p-1.5 border-b font-mono">${i.date}</td>
-            <td class="p-1.5 border-b"><span class="px-1 py-0.2 rounded text-[9px] font-bold ${i.semester === 'Semester 2' ? 'bg-indigo-100 text-indigo-800' : 'bg-blue-100 text-blue-800'}">${i.semester}</span></td>
-            <td class="p-1.5 border-b font-bold text-slate-800">${i.criterion}</td>
+            <td class="p-1.5 border-b font-black text-blue-900">#${next}</td>
+            <td class="p-1.5 border-b font-mono">${i.date || '-'}</td>
+            <td class="p-1.5 border-b"><span class="px-1 py-0.2 rounded text-[9px] font-bold ${i.semester === 'Semester 2' ? 'bg-indigo-100 text-indigo-800' : 'bg-blue-100 text-blue-800'}">${i.semester || '-'}</span></td>
+            <td class="p-1.5 border-b font-bold text-slate-800">${i.criterion || '-'}</td>
             <td class="p-1.5 border-b text-slate-600">${i.remarks || '-'}</td>
-            <td class="p-1.5 border-b font-semibold text-slate-500">${i.teacherInitials}</td>
-          </tr>
-        `).join('');
+            <td class="p-1.5 border-b font-semibold text-slate-500">${i.teacherInitials || '-'}</td>
+            <td class="p-1.5 border-b text-center">
+              <button onclick="deleteSingleIncident('${i.id || i.incidentId}')" class="text-slate-400 hover:text-red-600 p-1" title="Delete Default">
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
+            </td>
+          </tr>`;
+        }).join('');
       }
 
       document.getElementById('studentHistoryModal').classList.remove('hidden');
     }
 
+    async function deleteSingleIncident(incId) {
+      const inc = incidents.find(x => (x.id && x.id === incId) || (x.incidentId && x.incidentId === incId));
+      if (!inc) return showToast("Incident record not found.", true);
+
+      const confirmed = confirm(
+        `⚠️ DELETE DEFAULT RECORD?\n\n` +
+        `• Student: ${inc.studentName} (${inc.class}-${inc.division})\n` +
+        `• Date: ${inc.date} [${inc.semester}]\n` +
+        `• Criterion: ${inc.criterion}\n` +
+        `• Remarks: ${inc.remarks}\n\n` +
+        `This will permanently remove this default and resequence the remaining defaults for the same academic year and semester.`
+      );
+      if (!confirmed) return;
+
+      const studentName = inc.studentName;
+      const targetStudent = students.find(st => st.name === studentName);
+      const group = incidents.filter(x => sameNumberingGroup(x, inc) && (x.id !== incId && x.incidentId !== incId));
+      group.sort(compareIncidentsChronologically);
+      const periodCounters = new Map();
+      const updates = group.map((record, index) => {
+        const key = incidentPeriodKey(record);
+        const periodNo = (periodCounters.get(key) || 0) + 1;
+        periodCounters.set(key, periodNo);
+        return { record, defaultNo: index + 1, studentTotalDefaults: periodNo, thresholdStatus: thresholdForPeriodCount(periodNo) };
+      });
+      const deletingFromActivePeriod = inc.semester === settings.activeSemester && inc.academicYear === settings.academicYear;
+      const activeCountAfterDelete = Math.max(0, getStudentSemesterDefaultsCount(studentName, settings.activeSemester, settings.academicYear) - (deletingFromActivePeriod ? 1 : 0));
+      const newThreshold = thresholdForPeriodCount(activeCountAfterDelete);
+
+      let deletedByIncidentIdFallback = false;
+      if (isCloudConnected && cloudDb) {
+        try {
+          let deleteRefs = [];
+          if (inc.id) {
+            const targetRef = cloudDb.collection('incidents').doc(inc.id);
+            const targetSnap = await targetRef.get();
+            if (targetSnap.exists) deleteRefs = [targetRef];
+          }
+          if (!deleteRefs.length && inc.incidentId) {
+            const targetSnap = await cloudDb.collection('incidents').where('incidentId', '==', inc.incidentId).get();
+            targetSnap.forEach(doc => deleteRefs.push(doc.ref));
+            deletedByIncidentIdFallback = deleteRefs.length > 0;
+          }
+          if (!deleteRefs.length) throw new Error('The target cloud incident could not be found. No changes were committed.');
+
+          // Firestore batches support at most 500 writes. Abort before any write rather than partially updating.
+          const requiredWrites = updates.length + deleteRefs.length + (targetStudent ? 1 : 0);
+          if (requiredWrites > 500) throw new Error("This student's incident group exceeds Firestore's 500-write batch limit. No changes were committed.");
+          const batch = cloudDb.batch();
+          deleteRefs.forEach(ref => batch.delete(ref));
+          for (const item of updates) {
+            if (!item.record.id) throw new Error('A remaining incident is missing its Firestore document ID. No changes were committed.');
+            batch.update(cloudDb.collection('incidents').doc(item.record.id), {
+              defaultNo: item.defaultNo,
+              studentTotalDefaults: item.studentTotalDefaults,
+              thresholdStatus: item.thresholdStatus
+            });
+          }
+          if (targetStudent && targetStudent.id) {
+            batch.update(cloudDb.collection('students').doc(targetStudent.id), {
+              totalDefaults: activeCountAfterDelete,
+              thresholdStatus: newThreshold
+            });
+          }
+          await batch.commit();
+        } catch (e) {
+          console.error("Cloud incident delete/resequence failed; local data was not changed:", e);
+          return showToast("Delete/resequence failed in cloud. No local records were changed. Check connection and try again only after verifying cloud records.", true);
+        }
+      }
+
+      // Apply the same deterministic resequencing locally only after the cloud batch succeeds (or offline mode is active).
+      incidents = incidents.filter(x => x.id !== inc.id && x.id !== incId && x.incidentId !== incId && !(deletedByIncidentIdFallback && x.incidentId === inc.incidentId));
+      const remainingGroup = incidents.filter(x => sameNumberingGroup(x, inc)).sort(compareIncidentsChronologically);
+      const localPeriodCounters = new Map();
+      remainingGroup.forEach((record, index) => {
+        const key = incidentPeriodKey(record);
+        const periodNo = (localPeriodCounters.get(key) || 0) + 1;
+        localPeriodCounters.set(key, periodNo);
+        record.defaultNo = index + 1;
+        record.studentTotalDefaults = periodNo;
+        record.thresholdStatus = thresholdForPeriodCount(periodNo);
+      });
+
+      if (targetStudent && inc.academicYear === settings.academicYear && inc.semester === settings.activeSemester) {
+        targetStudent.totalDefaults = activeCountAfterDelete;
+        targetStudent.thresholdStatus = newThreshold;
+      }
+      saveState();
+      updateCountsAndBadges();
+      renderStudentRoster();
+      renderCriticalStudents();
+      renderTodayActivityFeed();
+      renderClassDefaulterReport();
+      renderGoodStudentsReport();
+      populateLetterStudentDropdown();
+      if (currentSelectedStudentForHistory) viewStudentDefaultsHistory(currentSelectedStudentForHistory.id);
+      showToast("Default deleted. Remaining incidents have been resequenced and counters recalculated.");
+    }
+
     function closeStudentHistoryModal() {
-      document.getElementById('studentHistoryModal').classList.add('hidden');
+      const modal = document.getElementById('studentHistoryModal');
+      if (modal) modal.classList.add('hidden');
+      document.body.classList.remove('overflow-hidden');
+      document.documentElement.classList.remove('overflow-hidden');
+    }
+
+    if (!window.__mizaanHistoryModalCloseBound) {
+      window.__mizaanHistoryModalCloseBound = true;
+      document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') closeStudentHistoryModal();
+      });
+      document.addEventListener('click', function(event) {
+        const modal = document.getElementById('studentHistoryModal');
+        if (modal && event.target === modal && !modal.classList.contains('hidden')) closeStudentHistoryModal();
+      });
     }
 
     function shareStudentHistoryWhatsApp() {
       if (!currentSelectedStudentForHistory) return;
       const st = currentSelectedStudentForHistory;
-      const sIncidents = incidents.filter(i => i.studentName === st.name && (!settings.academicYear || i.academicYear === settings.academicYear));
+      const sIncidents = incidents.filter(i => i.studentName === st.name && (!settings.academicYear || i.academicYear === settings.academicYear)).sort(compareIncidentsChronologically);
+      const historySequence = new Map();
       
       let msg = `*DISCIPLINE & ACADEMIC DEFALUT REPORT*\n` +
                 `*MIZAAN ENGLISH SCHOOL, LATUR*\n\n` +
@@ -2105,8 +2576,11 @@
       if (sIncidents.length === 0) {
         msg += `No discipline or academic defaults recorded.\n`;
       } else {
-        sIncidents.slice(0, 10).forEach((inc, idx) => {
-          msg += `${idx + 1}. ${inc.date} [${inc.semester}]: ${inc.criterion} (${inc.remarks || 'No remarks'}) - Tr: ${inc.teacherInitials}\n`;
+        sIncidents.forEach((inc) => {
+          const groupKey = `${inc.studentName}|${inc.academicYear || settings.academicYear}`;
+          const sequenceNo = (historySequence.get(groupKey) || 0) + 1;
+          historySequence.set(groupKey, sequenceNo);
+          msg += `#${sequenceNo}. ${inc.date} [${inc.semester}]: ${inc.criterion} (${inc.remarks || 'No remarks'}) - Tr: ${inc.teacherInitials}\n`;
         });
       }
       msg += `\n- Principal / Academic Head\nMizaan English School, Latur`;
@@ -2119,7 +2593,7 @@
       window.open(url, '_blank');
     }
 
-    // --- REQUIREMENT 7: CLASS DEFAULTER REPORT LOGIC ---
+    // --- CLASS DEFAULTER REPORT LOGIC ---
     function populateClassDefaulterDropdown() {
       const clsSel = document.getElementById('cdrClassSelect');
       if (!clsSel) return;
@@ -2150,14 +2624,12 @@
         return;
       }
 
-      // Filter students in that class
       const classStudents = students.filter(s => {
         if (`${s.class}-${s.division}` !== targetClass) return false;
         if (sec !== "Whole School" && s.section !== sec) return false;
         return true;
       });
 
-      // Filter incidents for this class
       const defaultersList = [];
       classStudents.forEach(st => {
         const studentInc = incidents.filter(i => {
@@ -2246,6 +2718,180 @@
       window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
     }
 
+    // --- REQUIREMENT 4: STAR & COMMENDABLE STUDENTS (0 TO 4 DEFAULTS) ---
+    function populateGoodStudentsDropdown() {
+      const clsSel = document.getElementById('gsClassSelect');
+      if (!clsSel) return;
+
+      const classesSet = new Set();
+      students.forEach(s => {
+        if (s.class && s.division) classesSet.add(`${s.class}-${s.division}`);
+      });
+
+      const sortedClasses = Array.from(classesSet).sort((a,b) => {
+        const pA = parseClassKey(a);
+        const pB = parseClassKey(b);
+        if (pA.grade !== pB.grade) return pA.grade - pB.grade;
+        return pA.div.localeCompare(pB.div);
+      });
+
+      clsSel.innerHTML = '<option value="">Select a Class...</option>' + sortedClasses.map(c => `<option value="${c}">Class ${c}</option>`).join('');
+    }
+
+    function renderGoodStudentsReport() {
+      const sec = document.getElementById('gsSectionSelect').value;
+      const sem = document.getElementById('gsSemesterSelect').value;
+      const period = document.getElementById('gsPeriodSelect').value;
+      const targetClass = document.getElementById('gsClassSelect').value;
+      const tb = document.getElementById('goodStudentsTableBody');
+
+      if (!targetClass) {
+        tb.innerHTML = `<tr><td colspan="4" class="p-3 text-center text-slate-400">Select a Class above to see the appreciation list.</td></tr>`;
+        return;
+      }
+
+      const now = new Date();
+      const firstDayOfMonth = new Date(now.getFullYear(), now.getMonth(), 1).toISOString().split('T')[0];
+      const todayStr = now.toISOString().split('T')[0];
+
+      const classStudents = students.filter(s => {
+        if (`${s.class}-${s.division}` !== targetClass) return false;
+        if (sec !== "Whole School" && s.section !== sec) return false;
+        return true;
+      });
+
+      const goodStudentsList = [];
+      classStudents.forEach(st => {
+        const matchingIncidents = incidents.filter(i => {
+          if (i.studentName !== st.name) return false;
+          if (sem !== "All" && i.semester !== sem) return false;
+          if (period === 'month') {
+            if (i.date < firstDayOfMonth || i.date > todayStr) return false;
+          } else if (period === 'year') {
+            if (settings.academicYear && i.academicYear !== settings.academicYear) return false;
+          }
+          return true;
+        });
+
+        const count = matchingIncidents.length;
+        if (count <= 4) {
+          goodStudentsList.push({
+            student: st,
+            count: count
+          });
+        }
+      });
+
+      if (goodStudentsList.length === 0) {
+        tb.innerHTML = `<tr><td colspan="4" class="p-3 text-center text-slate-400">No students found with 4 or fewer defaults in this class.</td></tr>`;
+        return;
+      }
+
+      // Sort Ascending: 0 defaults first, then 1, 2, 3, 4
+      goodStudentsList.sort((a,b) => {
+        if (a.count !== b.count) return a.count - b.count;
+        const rA = parseInt(a.student.rollNo) || 999;
+        const rB = parseInt(b.student.rollNo) || 999;
+        if (rA !== rB) return rA - rB;
+        return a.student.name.localeCompare(b.student.name);
+      });
+
+      tb.innerHTML = goodStudentsList.map(item => {
+        let badgeHtml = "";
+        if (item.count === 0) {
+          badgeHtml = `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-black bg-amber-100 text-amber-900 border border-amber-300"><i class="fa-solid fa-star text-amber-500"></i> Star Student (Zero Defaults)</span>`;
+        } else if (item.count === 1) {
+          badgeHtml = `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-900 border border-emerald-300">🎖️ Exemplary Conduct</span>`;
+        } else if (item.count === 2) {
+          badgeHtml = `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-teal-100 text-teal-900 border border-teal-300">Good Standing</span>`;
+        } else {
+          badgeHtml = `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-50 text-blue-900 border border-blue-200">Satisfactory Conduct (${item.count} Defaults)</span>`;
+        }
+
+        return `
+          <tr class="${item.count === 0 ? 'bg-amber-50/40' : ''}">
+            <td class="p-2 border-b text-center font-mono font-bold">${item.student.rollNo}</td>
+            <td class="p-2 border-b font-bold text-slate-900">${item.student.name}</td>
+            <td class="p-2 border-b text-center font-black ${item.count === 0 ? 'text-emerald-700 font-extrabold text-xs' : 'text-slate-700'}">${item.count}</td>
+            <td class="p-2 border-b">${badgeHtml}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function shareGoodStudentsWhatsApp() {
+      const sec = document.getElementById('gsSectionSelect').value;
+      const sem = document.getElementById('gsSemesterSelect').value;
+      const period = document.getElementById('gsPeriodSelect').value;
+      const targetClass = document.getElementById('gsClassSelect').value;
+
+      if (!targetClass) return showToast("Select a Class first to share appreciation list.", true);
+
+      const now = new Date();
+      const firstDayOfMonth = new Date(now.getFullYear(), now.getMonth(), 1).toISOString().split('T')[0];
+      const todayStr = now.toISOString().split('T')[0];
+
+      const classStudents = students.filter(s => {
+        if (`${s.class}-${s.division}` !== targetClass) return false;
+        if (sec !== "Whole School" && s.section !== sec) return false;
+        return true;
+      });
+
+      const goodStudentsList = [];
+      classStudents.forEach(st => {
+        const matchingIncidents = incidents.filter(i => {
+          if (i.studentName !== st.name) return false;
+          if (sem !== "All" && i.semester !== sem) return false;
+          if (period === 'month') {
+            if (i.date < firstDayOfMonth || i.date > todayStr) return false;
+          } else if (period === 'year') {
+            if (settings.academicYear && i.academicYear !== settings.academicYear) return false;
+          }
+          return true;
+        });
+
+        const count = matchingIncidents.length;
+        if (count <= 4) goodStudentsList.push({ student: st, count: count });
+      });
+
+      goodStudentsList.sort((a,b) => {
+        if (a.count !== b.count) return a.count - b.count;
+        const rA = parseInt(a.student.rollNo) || 999;
+        const rB = parseInt(b.student.rollNo) || 999;
+        return rA - rB;
+      });
+
+      const zeroDef = goodStudentsList.filter(s => s.count === 0);
+      const lowDef = goodStudentsList.filter(s => s.count > 0 && s.count <= 4);
+
+      let msg = `🌟 *MIZAAN ENGLISH SCHOOL, LATUR* 🌟\n` +
+                `*STAR & COMMENDABLE CONDUCT RECOGNITION*\n\n` +
+                `Class: *Class ${targetClass}* | Section: *${sec}*\n` +
+                `Academic Year: *${settings.academicYear}* | Scope: *${sem} (${period.toUpperCase()})*\n\n` +
+                `We proudly recognize and congratulate our well-behaved students who demonstrated commendable discipline and high character:\n\n`;
+
+      if (zeroDef.length > 0) {
+        msg += `🏆 *STAR STUDENTS (ZERO DEFAULTS):*\n`;
+        zeroDef.forEach(item => {
+          msg += `• Roll ${item.student.rollNo}: *${item.student.name}* ⭐\n`;
+        });
+        msg += `\n`;
+      }
+
+      if (lowDef.length > 0) {
+        msg += `🎖️ *COMMENDABLE CONDUCT (1 TO 4 DEFAULTS):*\n`;
+        lowDef.forEach(item => {
+          msg += `• Roll ${item.student.rollNo}: *${item.student.name}* (${item.count} Defaults)\n`;
+        });
+        msg += `\n`;
+      }
+
+      msg += `Keep up the inspiring attitude and continue being role models for your school!\n\n` +
+             `- Principal / Academic Head\nMizaan English School, Latur`;
+
+      window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
     function renderStudentRoster() {
       const q = (document.getElementById('filterStudentRoster').value || '').toLowerCase();
       const tb = document.getElementById('studentRosterTableBody');
@@ -2301,6 +2947,7 @@
         renderStudentRoster();
         populateLetterStudentDropdown();
         populateClassDefaulterDropdown();
+        populateGoodStudentsDropdown();
       }
       showToast("Student deleted.");
     }
@@ -2318,11 +2965,11 @@
         renderStudentRoster();
         populateLetterStudentDropdown();
         populateClassDefaulterDropdown();
+        populateGoodStudentsDropdown();
       }
       showToast("All students deleted.");
     }
 
-    // --- REQUIREMENT 9: TOP 10 DEFAULTERS WITH CHRONOLOGICAL TIE-BREAKER & DISPATCH BADGES ---
     function toggleExpandAlertsList() {
       isAlertsListExpanded = !isAlertsListExpanded;
       document.getElementById('btnToggleExpandAlerts').innerText = isAlertsListExpanded ? "Collapse to Top 10" : "Expand / Show All Defaulters";
@@ -2335,7 +2982,6 @@
       
       const eligibleStudents = getScopedStudents();
 
-      // Gather student default statistics for target semester with tie-breaker (earliest incident timestamp)
       const list = [];
       eligibleStudents.forEach(st => {
         const sIncidents = incidents.filter(i => 
@@ -2345,7 +2991,6 @@
         );
 
         if (sIncidents.length >= 5) {
-          // Find earliest recorded incident date for tie-breaker
           sIncidents.sort((a,b) => (a.date || '').localeCompare(b.date || ''));
           const earliestDate = sIncidents[0] ? sIncidents[0].date : '2099-12-31';
           list.push({
@@ -2364,7 +3009,6 @@
 
       document.getElementById('alertsExpandWrapper').classList.remove('hidden');
 
-      // Sort descending by count, then chronological tie-breaker (earliest date first)
       list.sort((a,b) => {
         if (b.count !== a.count) return b.count - a.count;
         return a.earliestDate.localeCompare(b.earliestDate);
@@ -2374,7 +3018,6 @@
 
       container.innerHTML = displayList.map((item, idx) => {
         const s = item.student;
-        // Count previous dispatches for this student
         const sDispatches = dispatches.filter(d => d.studentName === s.name);
         const lettersIssued = sDispatches.filter(d => d.channel === 'Printed Letter').length;
         const messagesShared = sDispatches.filter(d => d.channel === 'WhatsApp' || d.channel === 'PDF Document').length;
@@ -2475,7 +3118,6 @@
         totalDefaults: c.totalDefaults
       }));
 
-      // Top 3 Best Classes
       const best = [...list].sort((a,b) => a.defaultersPct - b.defaultersPct).slice(0, 3);
       document.getElementById('bestClassesContainer').innerHTML = best.map(c => `
         <div class="bg-white p-2 rounded border border-emerald-200 flex justify-between text-xs">
@@ -2484,7 +3126,6 @@
         </div>
       `).join('');
 
-      // Top 3 Alarming Classes
       const alarming = [...list].sort((a,b) => b.defaultersPct - a.defaultersPct).slice(0, 3);
       document.getElementById('alarmingClassesContainer').innerHTML = alarming.map(c => `
         <div class="bg-white p-2 rounded border border-red-200 flex justify-between text-xs">
@@ -2493,7 +3134,6 @@
         </div>
       `).join('');
 
-      // Ascending Sequential Sort: 3-C to 10-S
       list.sort((a, b) => {
         const pA = parseClassKey(a.classKey);
         const pB = parseClassKey(b.classKey);
@@ -2513,7 +3153,6 @@
       `).join('');
     }
 
-    // --- REQUIREMENT 5: EXECUTIVE MONTHLY DIGEST WITH WHATSAPP SHARING ---
     function openExecutiveMonthlyDigestModal() {
       const now = new Date();
       const currentMonth = now.toLocaleString('default', { month: 'long', year: 'numeric' });
@@ -2556,7 +3195,7 @@
       window.open(`https://wa.me/?text=${encodeURIComponent(currentGeneratedDigestText)}`, '_blank');
     }
 
-    // --- WARNING LETTER CONTROLS ---
+    // --- REQUIREMENT 3: WARNING LETTER CONTROLS (SHOWS UP TO 20 DEFAULTS ON 1 PAGE) ---
     function populateLetterStudentDropdown() {
       const sel = document.getElementById('wlStudentSelect');
       if (!sel) return;
@@ -2605,7 +3244,9 @@
       if (sel && sel.value !== studentId) sel.value = studentId;
 
       const studentIncidents = incidents.filter(i => i.studentName === student.name && (!settings.academicYear || i.academicYear === settings.academicYear));
-      const totalCount = getStudentSemesterDefaultsCount(student.name) || studentIncidents.length || 1;
+      const letterIncidents = [...studentIncidents].sort(compareIncidentsChronologically);
+      const totalCount = getStudentSemesterDefaultsCount(student.name) || letterIncidents.length || 1;
+      applyWarningLetterScale(Math.min(letterIncidents.length, 20));
       const nextCount = totalCount + 1;
       const ordinalUpper = getOrdinal(totalCount).toUpperCase();
       const ordinalLower = getOrdinal(totalCount).toLowerCase();
@@ -2619,30 +3260,43 @@
       document.getElementById('wlMainParagraph').innerHTML = `Dear Parent / Guardian,<br>This is to formally inform you that your ward has reached the <strong>${ordinalLower} recorded discipline/academic default</strong> in ${settings.activeSemester}. The school has observed repeated concerns requiring immediate correction at home and school.`;
       document.getElementById('wlEscalationSentence').innerHTML = `Please treat this communication with highest priority. A compulsory meeting with school authorities is required. Further defaults (<strong>${nextCount}th+</strong>) will lead to stricter disciplinary and administrative actions under school policy.`;
 
-      let displayLogs = [...studentIncidents].sort((a,b) => (b.defaultNo || 0) - (a.defaultNo || 0)).slice(0, 15);
-      displayLogs.sort((a,b) => (a.defaultNo || 0) - (b.defaultNo || 0));
+      // CAP OF 20 DEFAULTS: display the latest 20 in the active semester, in chronological order.
+      const exceeds20 = letterIncidents.length > 20;
+      const noticeEl = document.getElementById('wlExceedsNotice');
+      if (noticeEl) {
+        if (exceeds20) {
+          noticeEl.innerText = `Note: Displaying the latest 20 recorded defaults out of ${letterIncidents.length} defaults in ${settings.academicYear}.`;
+          noticeEl.classList.remove('hidden');
+        } else {
+          noticeEl.classList.add('hidden');
+        }
+      }
+
+      let displayLogs = letterIncidents.slice(-20);
 
       const tbody = document.getElementById('wlTableBody');
+      const remarksLimit = displayLogs.length <= 5 ? 220 : (displayLogs.length <= 10 ? 140 : 90);
       if (displayLogs.length === 0) {
         tbody.innerHTML = `<tr><td colspan="6" class="border border-slate-300 p-2 text-center text-slate-400 italic">No historical defaults logged in system yet.</td></tr>`;
       } else {
         tbody.innerHTML = displayLogs.map((r, idx) => `
           <tr>
-            <td class="border border-slate-300 py-1 px-1.5 text-center font-bold text-slate-700">#${r.defaultNo || (idx + 1)}</td>
-            <td class="border border-slate-300 py-1 px-1.5">${r.date}</td>
-            <td class="border border-slate-300 py-1 px-1.5">${r.type}</td>
-            <td class="border border-slate-300 py-1 px-1.5 font-bold">${r.criterion}</td>
-            <td class="border border-slate-300 py-1 px-1.5 text-slate-600">${r.remarks || '-'}</td>
-            <td class="border border-slate-300 py-1 px-1.5 text-center font-semibold">${r.teacherInitials}</td>
+            <td class="border border-slate-300 py-0.5 px-1 text-center font-bold text-slate-700">#${getIncidentDisplayNumber(r)}</td>
+            <td class="border border-slate-300 py-0.5 px-1.5 font-mono">${escapeHtml(r.date || '-')}</td>
+            <td class="border border-slate-300 py-0.5 px-1.5">${escapeHtml(r.type || '-')}</td>
+            <td class="border border-slate-300 py-0.5 px-1.5 font-bold">${escapeHtml(r.criterion || '-')}</td>
+            <td class="border border-slate-300 py-0.5 px-1.5 text-slate-600">${escapeHtml(shortenText(r.remarks || '-', remarksLimit))}</td>
+            <td class="border border-slate-300 py-0.5 px-1 text-center font-semibold">${escapeHtml(r.teacherInitials || '-')}</td>
           </tr>
         `).join('');
       }
 
       currentIncidentForWhatsApp = {
         student: student,
-        criteria: displayLogs.length > 0 ? [...new Set(displayLogs.map(l => l.criterion))].slice(0, 4).join(', ') : 'Continuous Academic & Disciplinary Default',
+        criteria: displayLogs.length > 0 ? [...new Set(displayLogs.map(l => l.criterion))].slice(0, 5).join(', ') : 'Continuous Academic & Disciplinary Default',
         remarks: displayLogs.length > 0 ? (displayLogs[displayLogs.length - 1].remarks || 'Repeated defaults reached formal warning threshold') : 'Formal Warning Notice Issued',
         totalDefaults: totalCount,
+        incidents: letterIncidents.map(item => ({ ...item, displayNo: getIncidentDisplayNumber(item) })),
         teacher: displayLogs.length > 0 ? displayLogs[displayLogs.length - 1].teacherInitials : 'Office',
         date: new Date().toLocaleDateString('en-GB')
       };
@@ -2683,7 +3337,7 @@
       showToast("Generating PDF document...");
 
       const opt = {
-        margin: [8, 8, 8, 8],
+        margin: [6, 6, 6, 6],
         filename: filename,
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: { scale: 2, useCORS: true },
@@ -2970,7 +3624,6 @@
       showToast("Criterion deleted and synced.");
     }
 
-    // --- TOP NAV VIEW CONTROLLER ---
     function switchView(viewId) {
       const views = ['quickEntry', 'students', 'dashboard', 'reports', 'warningLetter', 'settings'];
       views.forEach(v => {
@@ -2996,6 +3649,8 @@
       if (viewId === 'reports') {
         if (!document.getElementById('repFromDate').value) setReportDateRange('allTime');
         else runManagementAnalysis();
+        populateGoodStudentsDropdown();
+        renderGoodStudentsReport();
       }
       if (viewId === 'quickEntry') renderTodayActivityFeed();
       if (viewId === 'warningLetter') populateLetterStudentDropdown();
